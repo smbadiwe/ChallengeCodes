@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="BackTracking.cs" />
     <Compile Include="BinaryTreeQs.cs" />
+    <Compile Include="CodeFightsAMZNInterviewPractice.cs" />
     <Compile Include="CodeFightsArcade.cs" />
     <Compile Include="CodeFightsMSFTInterviewPractice.cs" />
     <Compile Include="CodeFightsSkillTest.cs" />
@@ -54,13 +55,18 @@
     <Compile Include="HumanBeing.cs" />
     <Compile Include="InterestingFormula.cs" />
     <Compile Include="LinkedListQs.cs" />
+    <Compile Include="MinHeap.cs" />
+    <Compile Include="OOAD\ElevatorDesign\Elevator.cs" />
     <Compile Include="PlayPrograms.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueueAsLinkedList.cs" />
-    <Compile Include="StackAsLinkedList.cs" />
+    <Compile Include="QueueUsingLinkedList.cs" />
+    <Compile Include="QueueUsingOneStack.cs" />
+    <Compile Include="QueueUsingTwoStacks.cs" />
+    <Compile Include="StackUsingLinkedList.cs" />
     <Compile Include="Tree.cs" />
     <Compile Include="TreeModels.cs" />
+    <Compile Include="Trie.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

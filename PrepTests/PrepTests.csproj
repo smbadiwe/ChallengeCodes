@@ -45,12 +45,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BinaryTreeQsTests.cs" />
+    <Compile Include="CodeFightsAMZNInterviewPracticeTests.cs" />
+    <Compile Include="CodeFightsArcadeTests.cs" />
     <Compile Include="CodeFightsMSFTInterviewPracticeTests.cs" />
+    <Compile Include="HackerRankTests.cs" />
     <Compile Include="LinkedListQsTests.cs" />
     <Compile Include="LinkedListTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueueAsLinkedListTests.cs" />
     <Compile Include="StackAsLinkedListTests.cs" />
+    <Compile Include="TrieTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

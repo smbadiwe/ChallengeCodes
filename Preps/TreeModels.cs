@@ -50,7 +50,7 @@ namespace Preps
     /// <typeparam name="T"></typeparam>
     public class LinkedListNode<T> : Node<T>
     {
-        public LinkedListNode()
+        public LinkedListNode() : base(default(T))
         {
 
         }
@@ -62,15 +62,15 @@ namespace Preps
         {
             get
             {
-                if (Neighbors == null) return null;
+                if (Children == null || Children.Count == 0) return null;
 
-                return (LinkedListNode<T>)Neighbors[0];
+                return (LinkedListNode<T>)Children[0];
             }
             set
             {
-                if (Neighbors == null) Neighbors = new NodeList<T>(1);
+                if (Children == null) Children = new NodeList<T>(1);
 
-                Neighbors[0] = value;
+                Children.Add(value);
             }
         }
 
@@ -82,31 +82,30 @@ namespace Preps
 
     public class BinaryTreeNode<T> : Node<T>
     {
-        public BinaryTreeNode() : base() { }
-        public BinaryTreeNode(T data) : base(data, null) { }
-        public BinaryTreeNode(T data, BinaryTreeNode<T> left, BinaryTreeNode<T> right)
+        public BinaryTreeNode(T data) : base(data) { }
+        public BinaryTreeNode(T data, BinaryTreeNode<T> left, BinaryTreeNode<T> right) : base(data)
         {
             Value = data;
             NodeList<T> children = new NodeList<T>(2);
             children[0] = left;
             children[1] = right;
 
-            Neighbors = children;
+            Children = children;
         }
 
         public BinaryTreeNode<T> Left
         {
             get
             {
-                if (Neighbors == null) return null;
+                if (Children == null) return null;
 
-                return (BinaryTreeNode<T>)Neighbors[0];
+                return (BinaryTreeNode<T>)Children[0];
             }
             set
             {
-                if (Neighbors == null) Neighbors = new NodeList<T>(2);
+                if (Children == null) Children = new NodeList<T>(2);
 
-                Neighbors[0] = value;
+                Children[0] = value;
             }
         }
 
@@ -114,17 +113,56 @@ namespace Preps
         {
             get
             {
-                if (Neighbors == null) return null;
+                if (Children == null) return null;
 
-                return (BinaryTreeNode<T>)Neighbors[1];
+                return (BinaryTreeNode<T>)Children[1];
             }
             set
             {
-                if (Neighbors == null) Neighbors = new NodeList<T>(2);
+                if (Children == null) Children = new NodeList<T>(2);
 
-                Neighbors[1] = value;
+                Children[1] = value;
             }
         }
+    }
+
+    public class TrieNode<T> : Node<T>
+    {
+        #region For Trie's sake
+        public TrieNode(T value, int depth, TrieNode<T> parent) : base(value)
+        {
+            Value = value;
+            Children = new NodeList<T>();
+            Depth = depth;
+            Parent = parent;
+        }
+
+        public new NodeList<T> Children
+        {
+            get { return base.Children; }
+            set { base.Children = value; }
+        }
+
+        public int Depth { get; set; }
+        public TrieNode<T> Parent { get; set; }
+        public bool IsLeaf
+        {
+           get { return Children.Count == 0; }
+        }
+
+        public virtual TrieNode<T> FindChildNode(T c)
+        {
+            return Children.FindByValue(c) as TrieNode<T>;
+        }
+
+        public void DeleteChildNode(T c)
+        {
+            for (var i = 0; i < Children.Count; i++)
+                if (Children[i].Value.Equals(c))
+                    Children.RemoveAt(i);
+        }
+
+        #endregion
     }
 
     public class NodeList<T> : Collection<Node<T>>
@@ -152,17 +190,15 @@ namespace Preps
 
     public class Node<T>
     {
-        public Node() { }
-        public Node(T data) : this(data, null) { }
-        public Node(T data, NodeList<T> neighbors)
+        public Node(T data)
         {
             Value = data;
-            Neighbors = neighbors;
+            Children = new NodeList<T>();
         }
 
         public T Value { get; set; }
 
-        protected NodeList<T> Neighbors { get; set; }
+        protected NodeList<T> Children { get; set; }
 
         public override string ToString()
         {

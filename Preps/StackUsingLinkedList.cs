@@ -6,10 +6,10 @@ namespace Preps
     /// Linked-list implementation of stack
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class StackAsLinkedList<T>
+    public class StackUsingLinkedList<T>
     {
         private LinkedListNode<T> head;
-        public StackAsLinkedList()
+        public StackUsingLinkedList()
         {
             head = null;
         }

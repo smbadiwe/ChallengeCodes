@@ -11,6 +11,22 @@ namespace PrepTests
   [TestFixture]
     public class CodeFightsMSFTInterviewPracticeTests
     {
+
+
+        [Test]
+        public void kthLargestElement_Test()
+        {
+            var result = CodeFightsMSFTInterviewPractice.kthLargestElement(new[] { 7, 6, 5, 4, 3, 2, 1 }, 2);
+            Assert.AreEqual(6, result);
+        }
+
+        [Test]
+        public void productExceptSelf_Accumulator_Test()
+        {
+            var result = CodeFightsMSFTInterviewPractice.productExceptSelf_Accumulator(new[] { 1, 2, 3, 4 }, 12);
+            Assert.AreEqual(2, result);
+
+        }
         [Test]
         public void higherVersion2_Test()
         {

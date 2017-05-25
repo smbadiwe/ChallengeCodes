@@ -4,6 +4,33 @@ namespace Preps
 {
     public static class BinaryTreeQs
     {
+
+        public static bool isTreeSymmetric(this BinaryTree t)
+        {
+            return isMirror(t.Root, t.Root);
+        }
+
+        private static bool isMirror(BinaryTreeNode<int> l, BinaryTreeNode<int> r)
+        {
+            // if both trees are empty, then they are mirror image
+            if (l == null && r == null) return true;
+
+            // For two trees to be mirror images, the following three
+            // conditions must be true
+            // 1 - Their root node's key must be same
+            // 2 - left subtree of left tree and right subtree
+            //      of right tree have to be mirror images
+            // 3 - right subtree of left tree and left subtree
+            //      of right tree have to be mirror images
+            if (l != null && r != null && l.Value == r.Value)
+            {
+                return isMirror(l.Left, r.Right) && isMirror(l.Right, r.Left);
+            }
+            // if neither of the above conditions is true then
+            // root1 and root2 are not mirror images
+            return false;
+        }
+
         /// <summary>
         /// Flatten A Binary Tree to Linked List (In-place).
         /// Essentially, we're to do a pre-order transversal

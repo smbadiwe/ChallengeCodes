@@ -31,6 +31,7 @@ namespace Preps
                     sum += A[i];
                 }
 
+                // Sum of zero elements is assumed to be equal to 0.This can happen if P = 0 or if P = N−1.
                 if (sum - A[0] == 0) return 0;
                 if (sum - A[len - 1] == 0) return len - 1;
 

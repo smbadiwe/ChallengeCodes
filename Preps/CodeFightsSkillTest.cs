@@ -10,6 +10,7 @@ namespace Preps
     {
         public static long totalOnes(int k)
         {
+            
             long count = 0;
             while (k > 0)
             {
@@ -176,65 +177,6 @@ namespace Preps
             return res;
         }
 
-        /// <summary>
-        /// TODO: Still failing https://codefights.com/interview/eLcCSQkH9Bd7A6Mep/topics/stacks/description
-        /// Given an array a composed of distinct elements, find the next larger 
-        /// element for each element of the array in the order in which they appear 
-        /// in the array, and return the results as a new array of the same length. 
-        /// If an element does not have a larger element to its right, put -1 in 
-        /// the appropriate cell of the result array.
-        /// </summary>
-        /// <param name="a"></param>
-        /// <returns></returns>
-        public static int[] nextLarger(int[] a)
-        {
-            if (a.Length == 1) return new[] { -1 };
-
-            Stack<int> s = new Stack<int>(a.Length);
-            s.Push(a[0]);
-
-            int next = -1, popped = -1;
-            var result = new List<int>(a.Length);
-            for (int i = 1; i < a.Length; i++)
-            {
-                next = a[i];
-                bool pushNext = false;
-                if (s.Count > 0)
-                {
-                    popped = s.Pop();
-                    while (popped < next)
-                    {
-                        pushNext = true;
-                        result.Add(next);
-                        if (s.Count == 0)
-                        {
-                            break;
-                        }
-                        popped = s.Pop();
-                    }
-
-                    if (next < popped)
-                    {
-                        s.Push(popped);
-                    }
-                }
-                if (pushNext)
-                {
-                    s.Push(next);
-                }
-                //else
-                //{
-                //    result.Add(-1);
-                //}
-            }
-            while (s.Count > 0)
-            {
-                s.Pop();
-                result.Add(-1);
-            }
-            return result.ToArray();
-        }
-
 
         #region minimumOnStack - O(operations.Length) time
         /// <summary>
@@ -246,8 +188,6 @@ namespace Preps
         public static int[] minimumOnStack(string[] operations)
         {
             var results = new List<int>();
-            LinkedList<int> wer = new LinkedList<int>();
-
             var stack = new MyStack();
             foreach (var query in operations)
             {
@@ -310,7 +250,7 @@ namespace Preps
 
             public void Pop()
             {
-                var item = _stack.First.Value;
+                var data = _stack.First.Value;
                 _stack.RemoveFirst();
                 _count--;
                 if (_count == 1)
@@ -319,9 +259,9 @@ namespace Preps
                 }
                 else
                 {
-                    if (item < MinValue)
+                    if (data < MinValue)
                     {
-                        MinValue = 2 * MinValue - item;
+                        MinValue = 2 * MinValue - data;
                     }
                 }
             }

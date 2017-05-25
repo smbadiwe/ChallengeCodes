@@ -1,10 +1,17 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace Preps
 {
+    public struct PErson
+    {
+        public string name;
+        public string number;
+
+    }
    partial class Program
     {
         static int fibDP(int n) {

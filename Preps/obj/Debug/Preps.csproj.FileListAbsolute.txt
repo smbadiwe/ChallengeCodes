@@ -4,3 +4,9 @@ C:\Users\Super User\documents\visual studio 2015\Projects\Preps\Preps\bin\Debug\
 C:\Users\Super User\documents\visual studio 2015\Projects\Preps\Preps\obj\Debug\Preps.csprojResolveAssemblyReference.cache
 C:\Users\Super User\documents\visual studio 2015\Projects\Preps\Preps\obj\Debug\Preps.exe
 C:\Users\Super User\documents\visual studio 2015\Projects\Preps\Preps\obj\Debug\Preps.pdb
+C:\SOMA\Deeds\ChallengeCodes\Preps\bin\Debug\Preps.exe.config
+C:\SOMA\Deeds\ChallengeCodes\Preps\obj\Debug\Preps.exe
+C:\SOMA\Deeds\ChallengeCodes\Preps\obj\Debug\Preps.pdb
+C:\SOMA\Deeds\ChallengeCodes\Preps\bin\Debug\Preps.exe
+C:\SOMA\Deeds\ChallengeCodes\Preps\bin\Debug\Preps.pdb
+C:\SOMA\Deeds\ChallengeCodes\Preps\obj\Debug\Preps.csprojResolveAssemblyReference.cache

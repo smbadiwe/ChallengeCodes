@@ -5,8 +5,214 @@ using System.Text;
 
 namespace Preps
 {
-    public class CodeFightsMSFTInterviewPractice
+    public static class CodeFightsMSFTInterviewPractice
     {
+        /// <summary>
+        /// Partitions the given list around a pivot element such that all elements on left of pivot are <= pivot
+        /// and the ones at thr right are > pivot. This method can be used for sorting, N-order statistics such as
+        /// as median finding algorithms.
+        /// Pivot is selected ranodmly if random number generator is supplied else its selected as last element in the list.
+        /// Reference: Introduction to Algorithms 3rd Edition, Corman et al, pp 171
+        /// </summary>
+        private static int Partition<T>(this IList<T> list, int startInd, int endInd, Random rnd = null) where T : IComparable<T>
+        {
+            if (rnd != null)
+                list.Swap(endInd, rnd.Next(startInd, endInd + 1));
+
+            var pivot = list[endInd];
+            var lastLow = startInd - 1;
+            for (var i = startInd; i < endInd; i++)
+            {
+                if (list[i].CompareTo(pivot) <= 0)
+                    list.Swap(i, ++lastLow);
+            }
+            list.Swap(endInd, ++lastLow);
+            return lastLow;
+        }
+
+        /// <summary>
+        /// Returns Nth smallest element from the list. Here n starts from 0 so that n=0 returns minimum, n=1 returns 2nd smallest element etc.
+        /// Note: specified list would be mutated in the process.
+        /// Reference: Introduction to Algorithms 3rd Edition, Corman et al, pp 216
+        /// </summary>
+        public static T NthOrderStatistic<T>(this IList<T> list, int n, Random rnd = null) where T : IComparable<T>
+        {
+            return NthOrderStatistic(list, n, 0, list.Count - 1, rnd);
+        }
+
+        private static T NthOrderStatistic<T>(this IList<T> list, int n, int startInd, int endInd, Random rnd) where T : IComparable<T>
+        {
+            while (true)
+            {
+                var pivotIndex = list.Partition(startInd, endInd, rnd);
+                if (pivotIndex == n)
+                    return list[pivotIndex];
+
+                if (n < pivotIndex)
+                    endInd = pivotIndex - 1;
+                else
+                    startInd = pivotIndex + 1;
+            }
+        }
+
+        public static void Swap<T>(this IList<T> list, int i, int j)
+        {
+            if (i == j)   //This check is not required but Partition function may make many calls so its for perf reason
+                return;
+            var temp = list[i];
+            list[i] = list[j];
+            list[j] = temp;
+        }
+
+
+        #region k-th largest element in an array (=> QuickSelect Algorithm)
+        public static int kthLargestElement(int[] nums, int k)
+        {
+            return quickSelect(nums, 0, nums.Length - 1, k - 1);
+        }
+
+        public static int quickSelect(int[] nums, int k)
+        {
+            int first = 0, last = nums.Length - 1;
+            while (first <= last)
+            {
+                int pivot = partition(nums, first, last);
+                if (pivot == k)
+                {
+                    return nums[k-1];
+                }
+                if (pivot > k)
+                {
+                    last = pivot - 1;
+                }
+                else
+                {
+                    first = pivot + 1;
+                }
+            }
+            return nums[k-1];
+        }
+
+        public static int quickSelect_Recursive(int[] nums, int k)
+        {
+            return quickSelect(nums, 0, nums.Length - 1, k - 1);
+        }
+
+        private static int quickSelect(int[] nums, int firstInd, int lastInd, int k)
+        {
+            if (firstInd <= lastInd)
+            {
+                int pivot = partition(nums, firstInd, lastInd);
+                if (pivot == k)
+                {
+                    return nums[k];
+                }
+                if (pivot > k)
+                {
+                    return quickSelect(nums, firstInd, pivot - 1, k);
+                }
+                return quickSelect(nums, pivot + 1, lastInd, k);
+            }
+            return int.MinValue;
+        }
+
+        private static int partition(int[] nums, int firstInd, int lastInd)
+        {
+            int pivot = firstInd + new Random().Next(lastInd - firstInd + 1);
+            swap(nums, lastInd, pivot);
+            for (int i = firstInd; i < lastInd; i++)
+            {
+                if (nums[i] > nums[lastInd])
+                {
+                    swap(nums, i, firstInd);
+                    firstInd++;
+                }
+            }
+            swap(nums, firstInd, lastInd);
+            return firstInd;
+        }
+
+        private static void swap(int[] nums, int x, int y)
+        {
+            int tmp = nums[x];
+            nums[x] = nums[y];
+            nums[y] = tmp;
+        }
+        #endregion
+
+        /// <summary>
+        /// Given an array of integers, find the maximum possible sum you can get from one of its 
+        /// contiguous subarrays. The subarray from which this sum comes must contain at least 1 element.
+        /// <para>
+        /// This is the Maximum subarray problem. Solution: Kadane's algorithm. https://en.wikipedia.org/wiki/Maximum_subarray_problem
+        /// </para>
+        /// </summary>
+        /// <param name="inputArray"></param>
+        /// <returns></returns>
+        public static int arrayMaxConsecutiveSum2(int[] inputArray)
+        {
+            int max, maxHere;
+            max = maxHere = inputArray[0];
+            for (int i = 1; i < inputArray.Length; i++)
+            {
+                maxHere = Math.Max(inputArray[i], maxHere + inputArray[i]);
+                max = Math.Max(max, maxHere);
+            }
+            return max;
+        }
+
+        #region Product Except Self - See http://blog.codefights.com/productexceptself-solution/
+        /*
+         * You have an array nums. We determine two functions to perform on nums. In both cases, 
+         * n is the length of nums:
+            fi(nums) = nums[0] · nums[1] · ... · nums[i - 1] · nums[i + 1] · ... · nums[n - 1]. 
+            (In other words, fi(nums) is the product of all array elements except the ithf.)
+            g(nums) = f0(nums) + f1(nums) + ... + fn-1(nums).
+            Using these two functions, calculate all values of f modulo the given m. 
+            Take these new values and add them together to get g. You should return the 
+            value of g modulo the given m.
+            For nums = [1, 2, 3, 4] and m = 12, the output should be productExceptSelf(nums, m) = 2.
+            Why?
+            The array of the values of f is: [24, 12, 8, 6]. If we take all the elements modulo m, we get:
+            [0, 0, 8, 6]. The sum of those values is 8 + 6 = 14, making the answer 14 % 12 = 2.
+         * */
+        public static int productExceptSelf_Accumulator(int[] nums, int m)
+        {
+            var suffixProduct = 1;
+            var prefixProduct = new int[nums.Length];
+            for (int i = 0; i < nums.Length; i++)
+            {
+                prefixProduct[i] = 1;
+            }
+            // setup the cumulative product from left and right
+            for (int i = 1; i < nums.Length; i++)
+            {
+                prefixProduct[i] = (prefixProduct[i - 1] * nums[i - 1]) % m;
+            }
+            int result = 0;
+            // start at the end, with prefixProduct and move backwards
+            for (int i = nums.Length - 1; i >= 0; i--)
+            {
+                result += (prefixProduct[i] * suffixProduct) % m;
+                // now multiply suffixProduct by the number that was excluded
+                suffixProduct = (suffixProduct * nums[i]) % m;
+            }
+            return result % m;
+        }
+
+        public static int productExceptSelf_HomersMethod(int[] nums, int m)
+        {
+            int p = 1;
+            int result = 0;
+            foreach (var num in nums)
+            {
+                result = (result * num + p) % m;
+                p = (p * num) % m;
+            }
+            return result;
+        }
+        #endregion
+
         /// <summary>
         /// You have two version strings composed of several non-negative decimal fields that are 
         /// separated by periods ("."). Both strings contain an equal number of numeric fields. 
@@ -100,10 +306,10 @@ namespace Preps
             result += string.Format("{0} {1} {2}", integerToEnglishWords(part), theItem.Value, integerToEnglishWords(number));
 
             return result.Trim();
-        } 
+        }
 
         private static readonly string[] oneTo19 = new[] { "Zero", "One", "Two", "Three",
-		 "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven",
+         "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven",
         "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen",
         "Seventeen", "Eighteen", "Nineteen" };
 
@@ -125,6 +331,8 @@ namespace Preps
             };
 
         #endregion
+
+        #region Count Inversions (How far array is from being sorted
 
         /// <summary>
         /// The inversion count for an array indicates how far the array is from being sorted. 
@@ -195,6 +403,8 @@ namespace Preps
             return count % (1000000000 + 7);
         }
 
+        #endregion
+
         /// <summary>
         /// Solution is recursive. It writes out the coins used. Repetition NOT allowed.
         /// </summary>
@@ -252,7 +462,7 @@ namespace Preps
         /// <para>Solution is DP. Returns number of possible combinations</para>
         /// </summary>
         /// <param name="coins"></param>
-        /// <param name="sum"></param>
+        /// <param name="sum">n</param>
         /// <returns></returns>
         public static long CoinChangeProblemDP(int[] coins, int sum)
         {

@@ -21,6 +21,32 @@ namespace Preps
         //    }
         //}
 
+        /// <summary>
+        /// Return true if the linkedlist has cycle, as in, if a node is visited more than once
+        /// </summary>
+        /// <param name="head"></param>
+        /// <returns></returns>
+        public static bool hasCycle(LinkedListNode<int> head)
+        {
+            if (head == null) return false;
+
+            LinkedListNode<int> slow = head;
+            LinkedListNode<int> fast = head.Next;
+            //Floyd's cycle-finding algorithm:
+            //If a loop exists, then the fast pointer will eventually end up behind the slow pointer. 
+            // The fast pointer will then catch up to the slow pointer, detecting the loop. 
+            // This will always happen, no matter the size of the loop.
+            while (slow != fast)
+            {
+                if (fast == null || fast.Next == null) return false;
+
+                slow = slow.Next;
+                fast = fast.Next.Next;
+            }
+
+            return true;
+        }
+
         public static LinkedListNode<int> SortListOf0s1sAnd2s(LinkedListNode<int> list)
         {
             int n0 = 0, n1 = 0, n2 = 0;
@@ -135,22 +161,15 @@ namespace Preps
 
         public static LinkedListNode<T> GetMiddleNode<T>(LinkedListNode<T> head)
         {
-            if (head.Next == null) return head;
+            if (head == null || head.Next == null) return head;
 
             LinkedListNode<T> fast = head, slow = head;
-            while (fast != null)
+            // when the number of elements are even, this check is to make sure the
+            // lower of the two mid values are returned
+            while (fast != null && fast.Next != null)
             {
-                fast = fast.Next;
-                if (fast != null)
-                {
-                    fast = fast.Next;
-                    // when the number of elements are even, this check is to make sure the
-                    // lower of the two mid values are returned
-                    if (fast != null)
-                    {
-                        slow = slow.Next;
-                    }
-                }
+                slow = slow.Next;
+                fast = fast.Next.Next;
             }
             return slow;
         }
@@ -162,21 +181,22 @@ namespace Preps
         /// <param name="head"></param>
         public static LinkedListNode<T> Reverse<T>(LinkedListNode<T> head)
         {
-            LinkedListNode<T> prev = null;
-            LinkedListNode<T> ptr = head;
-            LinkedListNode<T> temp;
-            while (ptr != null)
+            if (head == null || head.Next == null) return head;
+
+            LinkedListNode<T> prev = null, next = null;
+            LinkedListNode<T> current = head;
+            while (current != null)
             {
-                temp = ptr.Next;
-                ptr.Next = prev;
-                prev = ptr;
-                ptr = temp;
+                next = current.Next;
+                current.Next = prev;
+                prev = current;
+                current = next;
             }
             return prev;
         }
 
         /// <summary>
-        /// This method takes O(n) time and O(1) extra space.
+        /// This method takes O(n) time; and O(1) extra space. If <paramref name="useStack"/> is true, space is O(n).
         /// 1) Get the middle of the linked list.
         /// 2) Reverse the second half of the linked list.
         /// 3) Check if the first half and second half are identical.
@@ -184,30 +204,58 @@ namespace Preps
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="linkedList"></param>
+        /// <param name="useStack"></param>
         /// <returns></returns>
-        public static bool IsPalindrome<T>(LinkedListNode<T> linkedList)
+        public static bool IsPalindrome<T>(LinkedListNode<T> linkedList, bool useStack = false)
         {
-            if (linkedList.Next == null) return true;
+            if (linkedList == null || linkedList.Next == null) return true;
 
-            LinkedListNode<T> one = linkedList;
-            var mid = GetMiddleNode(linkedList);
-            mid.Next = Reverse(mid.Next);
-
-            LinkedListNode<T> two = mid.Next;
-            bool isPal = true;
-            while (two != null)
+            if (useStack)
             {
-                if (false == one.Value.Equals(two.Value))
+                var stack = new Stack<T>();
+                var current = linkedList;
+                while (current != null)
                 {
-                    isPal = false;
-                    break;
+                    stack.Push(current.Value);
+                    current = current.Next;
                 }
-                one = one.Next;
-                two = two.Next;
+                current = linkedList;
+                while (current != null)
+                {
+                    if (current.Value.Equals(stack.Pop()))
+                    {
+                        current = current.Next;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                return true;
             }
-            // Reverse back
-            mid.Next = Reverse(mid.Next);
-            return isPal;
+            else
+            {
+                var mid = GetMiddleNode(linkedList);
+                var second = Reverse(mid.Next);
+                LinkedListNode<T> first = linkedList, sechead = second;
+                mid.Next = null;
+                bool isPal = true;
+                while (first != null && second != null)
+                {
+                    if (first.Value.Equals(second.Value))
+                    {
+                        first = first.Next;
+                        second = second.Next;
+                    }
+                    else
+                    {
+                        isPal = false;
+                        break;
+                    }
+                }
+                mid.Next = Reverse(sechead);
+                return isPal;
+            }
         }
     }
 }

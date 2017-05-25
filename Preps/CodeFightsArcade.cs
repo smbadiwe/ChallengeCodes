@@ -1,13 +1,120 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Preps
 {
-    class CodeFightsArcade
+    public class CodeFightsArcade
     {
+        /// <summary>
+        /// Given a sorted array of integers a, find such an integer x that the value of
+        /// abs(a[0] - x) + abs(a[1] - x) + ... + abs(a[a.length - 1] - x)
+        /// is the smallest possible(here abs denotes the absolute value).
+        /// If there are several possible answers, output the smallest one.
+        /// HINT: It's the middle value
+        /// </summary>
+        /// <param name="a"></param>
+        /// <returns></returns>
+        public static int absoluteValuesSumMinimization(int[] a)
+        {
+            // Since array is sorted, this will be the middle element
+            if (a.Length > 2)
+                return a.Length % 2 == 0 ? a[(a.Length / 2) - 1] : a[a.Length / 2];
+
+            return a[0];
+
+            // Even better:
+            // return a[(a.Length - 1)/2];
+        }
+
+        public static int depositProfit(int deposit, int rate, int threshold)
+        {
+            int result = 0;
+            double amount = deposit;
+            while (amount < threshold)
+            {
+                amount *= (rate + 100) / (double)100;
+                result++;
+            }
+            return result;
+        }
+
+        public static string alphabeticShift(string inputString)
+        {
+            var charArr = new char[inputString.Length];
+            for (int i = 0; i < inputString.Length; i++)
+            {
+                var ch = inputString[i] + 1;
+                if (ch > 'z') ch = 'a';
+                charArr[i] = (char)ch;
+                //charArr[i] = (char)((inputString[i] - 96) % 26 + 97);
+            }
+            return new string(charArr);
+        }
+
+        public static int[][] minesweeper(bool[][] matrix)
+        {
+
+            int[][] result = new int[matrix.Length][];
+
+            //for (int i = 0; i < matrix.Length; i++)
+            //{
+            //    result[i] = new int[matrix[i].Length];
+            //}
+
+            for (int i = 0; i < matrix.Length; i++)
+            {
+                result[i] = new int[matrix[i].Length];
+                for (int j = 0; j < matrix[i].Length; j++)
+                {
+                    for (int m = i - 1; m <= i + 1; m++)
+                    {
+                        if (m < 0) continue;
+                        if (m >= matrix.Length) break;
+                        for (int n = j - 1; n <= j + 1; n++)
+                        {
+                            if (n < 0) continue;
+                            if (n >= matrix[m].Length) break;
+
+                            if (m == i && n == j) continue;
+                            if (matrix[m][n] == true)
+                            {
+                                result[i][j]++;
+                            }
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+        public static int[][] boxBlur(int[][] image)
+        {
+            int[][] result = new int[image.Length - 2][];
+            for (int i = 1; i < image.Length - 1; i++)
+            {
+                result[i - 1] = new int[image[i].Length - 2];
+            }
+
+            for (int i = 1; i < image.Length - 1; i++)
+            {
+                for (int j = 1; j < image[i].Length - 1; j++)
+                {
+                    int sum = 0;
+                    for (int m = i - 1; m <= i + 1; m++)
+                    {
+                        for (int n = j - 1; n <= j + 1; n++)
+                        {
+                            sum += image[m][n];
+                        }
+                    }
+                    int el = sum / 9;
+                    result[i - 1][j - 1] = el;
+                }
+            }
+            return result;
+        }
+
 
         /// <summary>
         ///<para>You are given an array of integers representing coordinates of obstacles situated on a straight line.

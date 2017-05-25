@@ -10,7 +10,7 @@ namespace PrepTests
         [Test]
         public void TestQueue_LinkedList_Impl()
         {
-            var queue = new QueueAsLinkedList<int>();
+            var queue = new QueueUsingLinkedList<int>();
             queue.Enqueue(5);
             queue.Enqueue(6);
             queue.Enqueue(7);

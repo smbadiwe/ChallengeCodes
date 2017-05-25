@@ -7,3 +7,12 @@ C:\Users\Super User\Documents\Visual Studio 2015\Projects\Preps\PrepTests\bin\De
 C:\Users\Super User\Documents\Visual Studio 2015\Projects\Preps\PrepTests\obj\Debug\PrepTests.csprojResolveAssemblyReference.cache
 C:\Users\Super User\Documents\Visual Studio 2015\Projects\Preps\PrepTests\obj\Debug\PrepTests.dll
 C:\Users\Super User\Documents\Visual Studio 2015\Projects\Preps\PrepTests\obj\Debug\PrepTests.pdb
+C:\SOMA\Deeds\ChallengeCodes\PrepTests\bin\Debug\PrepTests.dll
+C:\SOMA\Deeds\ChallengeCodes\PrepTests\bin\Debug\PrepTests.pdb
+C:\SOMA\Deeds\ChallengeCodes\PrepTests\bin\Debug\nunit.framework.dll
+C:\SOMA\Deeds\ChallengeCodes\PrepTests\bin\Debug\Preps.exe
+C:\SOMA\Deeds\ChallengeCodes\PrepTests\bin\Debug\Preps.pdb
+C:\SOMA\Deeds\ChallengeCodes\PrepTests\bin\Debug\nunit.framework.xml
+C:\SOMA\Deeds\ChallengeCodes\PrepTests\obj\Debug\PrepTests.csprojResolveAssemblyReference.cache
+C:\SOMA\Deeds\ChallengeCodes\PrepTests\obj\Debug\PrepTests.dll
+C:\SOMA\Deeds\ChallengeCodes\PrepTests\obj\Debug\PrepTests.pdb

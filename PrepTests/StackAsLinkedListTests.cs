@@ -14,7 +14,7 @@ namespace PrepTests
         [Test]
         public void TestStack_LinkedList_Impl()
         {
-            var stack = new StackAsLinkedList<int>();
+            var stack = new StackUsingLinkedList<int>();
             stack.Push(5);
             stack.Push(6);
             stack.Push(7);

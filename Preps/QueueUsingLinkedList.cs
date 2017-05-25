@@ -6,10 +6,10 @@ namespace Preps
     /// Linked-list implementation of queue
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class QueueAsLinkedList<T>
+    public class QueueUsingLinkedList<T>
     {
         private LinkedListNode<T> head;
-        public QueueAsLinkedList()
+        public QueueUsingLinkedList()
         {
             head = null;
         }
