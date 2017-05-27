@@ -51,6 +51,7 @@
     <Compile Include="CodeFightsSkillTest.cs" />
     <Compile Include="CodeFightsSkillTest2.cs" />
     <Compile Include="Codility.cs" />
+    <Compile Include="CrackingTheCodeInterviewQs.cs" />
     <Compile Include="HackerRank.cs" />
     <Compile Include="HumanBeing.cs" />
     <Compile Include="InterestingFormula.cs" />

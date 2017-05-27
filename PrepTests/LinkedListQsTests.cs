@@ -37,6 +37,65 @@ namespace PrepTests
             Assert.AreEqual(count, 4);
         }
         [Test]
+        public void Add_1()
+        {
+            var list = new LinkedListNode<int>
+            {
+                Value = 2,
+                Next = new LinkedListNode<int>
+                {
+                    Value = 3,
+                    Next = new LinkedListNode<int>
+                    {
+                        Value = 4,
+                        Next = null
+                    }
+                }
+            };
+            var list2 = new LinkedListNode<int>
+            {
+                Value = 1,
+                Next = null
+            };
+            var sum = LinkedListQs.Add(list, list2);
+            
+            Assert.AreEqual(3, sum.Value);
+            Assert.AreEqual(3, sum.Next.Value);
+            Assert.AreEqual(4, sum.Next.Next.Value);
+        }
+        [Test]
+        public void Add_2()
+        {
+            var list = new LinkedListNode<int>
+            {
+                Value = 9,
+                Next = new LinkedListNode<int>
+                {
+                    Value = 9,
+                    Next = new LinkedListNode<int>
+                    {
+                        Value = 9,
+                        Next = null
+                    }
+                }
+            };
+            var list2 = new LinkedListNode<int>
+            {
+                Value = 9,
+                Next = new LinkedListNode<int>
+                {
+                    Value = 9,
+                    Next = null
+                }
+            };
+            var sum = LinkedListQs.Add(list, list2);
+            
+            Assert.AreEqual(8, sum.Value);
+            Assert.AreEqual(9, sum.Next.Value);
+            Assert.AreEqual(0, sum.Next.Next.Value);
+            Assert.AreEqual(1, sum.Next.Next.Next.Value);
+        }
+        [Test]
         public void Intersect()
         {
             var list = new LinkedListNode<int>

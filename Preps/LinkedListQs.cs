@@ -47,6 +47,47 @@ namespace Preps
             return true;
         }
 
+        /// <summary>
+        /// Given a (maybe) circular linked list, find the beginning of the loop
+        /// </summary>
+        /// <param name="head"></param>
+        /// <returns></returns>
+        public static LinkedListNode<int> GetStartOfLoop(LinkedListNode<int> head)
+        {
+            if (head == null) return null;
+
+            LinkedListNode<int> slow = head;
+            LinkedListNode<int> fast = head;
+            //Floyd's cycle-finding algorithm:
+            //If a loop exists, then the fast pointer will eventually end up behind the slow pointer. 
+            // The fast pointer will then catch up to the slow pointer, detecting the loop. 
+            // This will always happen, no matter the size of the loop.
+            while (fast.Next != null)
+            {
+                slow = slow.Next;
+                fast = fast.Next.Next;
+                if (fast.Value == slow.Value)
+                {
+                    break;
+                }
+            }
+
+            // No cycle
+            if (fast.Next == null)
+            {
+                return null;
+            }
+
+            // now, find the guy
+            slow = head;
+            while (slow.Value != fast.Value)
+            {
+                slow = slow.Next;
+                fast = fast.Next;
+            }
+            return fast;
+        }
+
         public static LinkedListNode<int> SortListOf0s1sAnd2s(LinkedListNode<int> list)
         {
             int n0 = 0, n1 = 0, n2 = 0;
@@ -93,6 +134,40 @@ namespace Preps
                 i--;
             }
             return current;
+        }
+
+        public static LinkedListNode<int> Add(LinkedListNode<int> n1, LinkedListNode<int> n2)
+        {
+            LinkedListNode<int> ans = new LinkedListNode<int>(0);
+            LinkedListNode<int> num1 = n1, num2 = n2, result = ans, prev = null;
+            int sum = 0, carry = 0;
+            while (num1 != null || num2 != null)
+            {
+                sum = carry;
+                if (num1 != null)
+                    sum += num1.Value;
+                if (num2 != null)
+                    sum += num2.Value;
+
+                result.Value = sum % 10;
+                carry = sum / 10;
+                result.Next = new LinkedListNode<int>(0);
+                prev = result;
+                result = result.Next;
+                if (num1 != null)
+                    num1 = num1.Next;
+                if (num2 != null)
+                    num2 = num2.Next;
+            }
+            if (carry > 0)
+            {
+                result.Value = carry;
+            }
+            else
+            {
+                // remove the last node (leading 0) - if we care
+            }
+            return ans;
         }
 
         public static LinkedListNode<T> Union<T>(LinkedListNode<T> set1, LinkedListNode<T> set2)
