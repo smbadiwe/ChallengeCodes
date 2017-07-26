@@ -53,5 +53,29 @@ namespace PrepTests
             Assert.AreEqual(1, result.Length);
             Assert.AreEqual(2, result[0].Length);
         }
+
+
+        [Test]
+        public void stringsRearrangement()
+        {
+            var input = new[] {"abc",
+ "abx",
+ "axx",
+ "abx",
+ "abc"
+            };
+
+            var result = CodeFightsArcade.stringsRearrangement(input);
+            Assert.IsTrue(result);
+        }
+        
+        [Test]
+        public void findEmailDomain()
+        {
+            var input = "<>[]:,;@\"!#$%&*+-/=?^_{}| ~.a\"@example.org";
+
+            var result = CodeFightsArcade.findEmailDomain(input);
+            Assert.AreEqual("example.org", result);
+        }
     }
 }

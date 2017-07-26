@@ -1,25 +1,65 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Text;
 
 namespace Preps
 {
     public class LinkedListQs
     {
-        //public static LinkedListNode<int> MergerSorted(LinkedListNode<int> sortedSet1, LinkedListNode<int> sortedSet2)
-        //{
-        //    var current1 = sortedSet1;
-        //    var current2 = sortedSet2;
-        //    while (current1 != null)
-        //    {
-        //        if (current1.Value > current2.Value)
-        //        {
+        LinkedListNode<int> mergeTwoLinkedLists(LinkedListNode<int> l1, LinkedListNode<int> l2)
+        {
 
-        //        }
-        //        else if (current1.Value < current2.Value)
-        //        {
-        //        }
-        //    }
-        //}
+            LinkedListNode<int> dummy = new LinkedListNode<int>();
+            if (l1 == null)
+            {
+                dummy.Next = l2;
+            }
+            else if (l2 == null)
+            {
+                dummy.Next = l1;
+            }
+            else
+            {
+                LinkedListNode<int> curr1 = l1, curr2 = l2, currDummy = dummy;
+                while (curr1 != null && curr2 != null)
+                {
+                    if (curr1.Value < curr2.Value)
+                    {
+                        currDummy.Next = curr1;
+                        curr1 = curr1.Next;
+                        currDummy = currDummy.Next;
+                    }
+                    else if (curr2.Value < curr1.Value)
+                    {
+                        currDummy.Next = curr2;
+                        curr2 = curr2.Next;
+                        currDummy = currDummy.Next;
+                    }
+                    else if (curr1.Value == curr2.Value)
+                    {
+                        currDummy.Next = curr1;
+                        currDummy = currDummy.Next;
+                        curr1 = curr1.Next;
+                        currDummy.Next = curr2;
+                        currDummy = currDummy.Next;
+                        curr2 = curr2.Next;
+                    }
+                }
+
+                if (curr1 != null)
+                {
+                    currDummy.Next = curr1;
+                }
+                else if (curr2 != null)
+                {
+                    currDummy.Next = curr2;
+                }
+            }
+
+            return dummy.Next;
+        }
+
 
         /// <summary>
         /// Return true if the linkedlist has cycle, as in, if a node is visited more than once

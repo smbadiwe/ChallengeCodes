@@ -8,6 +8,43 @@ namespace Preps
 {
     partial class HackerRank
     {
+        /// <summary>
+        /// Davis has  staircases in his house and he likes to climb each staircase , , or  steps at a time. Being a very precocious child, he wonders how many ways there are to reach the top of the staircase.
+        /// Given the respective heights for each of the staircases in his house, find and print the number of ways he can climb each staircase on a new line.
+        /// </summary>
+        /// <param name="n">The n.</param>
+        /// <returns></returns>
+        public static int countJumps(int n)
+        {
+            int[] map = new int[n + 1];
+            for (int i = 0; i <= n; i++)
+            {
+                map[i] = -1;
+            }
+            return countJumps(n, map);
+        }
+
+        private static int countJumps(int n, int[] map)
+        {
+            if (n < 0)
+            {
+                return 0;
+            }
+
+            if (n == 0)
+            {
+                return 1;
+            }
+
+            if (map[n] > -1)
+            {
+                return map[n];
+            }
+
+            map[n] = countJumps(n - 1, map) + countJumps(n - 2, map) + countJumps(n - 3, map);
+            return map[n];
+        }
+
         #region MyRegion
         /// <summary>
         /// This prints out the median for each subarray, up to the last one

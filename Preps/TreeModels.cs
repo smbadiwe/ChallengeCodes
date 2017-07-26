@@ -23,6 +23,117 @@ namespace Preps
                 Max = int.MaxValue;
             }
         }
+        
+        public void PrintAllNodesAtDistance(int k)
+        {
+            PrintAllNodesAtDistance(Root, k);
+        }
+
+        public void PrintAllNodesAtDistance(BinaryTreeNode<int> node, int k)
+        {
+            // Base
+            if (node == null || k < 0) return;
+
+            // If we're there
+            if (k == 0)
+            {
+                Console.Write(node.Value + " ");
+            }
+
+            PrintAllNodesAtDistance(node.Left, k - 1);
+            PrintAllNodesAtDistance(node.Right, k - 1);
+        }
+
+        /// <summary>
+        /// Using in-order traversal - NOT SURE if this works
+        /// </summary>
+        /// <returns></returns>
+        public bool IsBST2()
+        {
+            if (this.Root == null) return true;
+            return InOrderTraversal(this.Root, null);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public bool IsBST()
+        {
+            if (this.Root == null) return true;
+
+            return IsBSTUtil(this.Root, int.MinValue, int.MaxValue);
+        }
+
+        public BinaryTreeNode<int> BSTGetMinimum()
+        {
+            if (Root == null) return null;
+
+            return BSTGetMinimum(Root);
+        }
+
+        public BinaryTreeNode<int> BSTGetMaximum()
+        {
+            if (Root == null) return null;
+
+            return BSTGetMaximum(Root);
+        }
+
+        private BinaryTreeNode<int> BSTGetMinimum(BinaryTreeNode<int> node)
+        {
+            BinaryTreeNode<int> min = node;
+            while (min.Left != null)
+            {
+                min = min.Left;
+            }
+            return min;
+        }
+
+        private static BinaryTreeNode<int> BSTGetMaximum(BinaryTreeNode<int> node)
+        {
+            BinaryTreeNode<int> min = node;
+            while (min.Right != null)
+            {
+                min = min.Right;
+            }
+            return min;
+        }
+
+        /// <summary>
+        /// Review this view
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="prev"></param>
+        /// <returns></returns>
+        private bool InOrderTraversal(BinaryTreeNode<int> node, BinaryTreeNode<int> prev)
+        {
+            //This uses inorder traversal
+            if (node != null)
+            {
+                if (!InOrderTraversal(node.Left, prev)) return false;
+
+                // allows only distinct values node
+                if (prev != null && node.Value <= prev.Value) return false;
+                prev = node;
+
+                return InOrderTraversal(node.Right, prev);
+            }
+            return true;
+        }
+
+        public static bool IsBSTUtil(BinaryTreeNode<int> node, int min, int max)
+        {
+            if (node == null) return true;
+
+            // The left subtree of a node contains only nodes with keys less than the node’s key.
+            // The right subtree of a node contains only nodes with keys greater than the node’s key.
+            if (node.Value < min || node.Value > max) return false;
+
+            // Both the left and right subtrees must also be binary search trees.
+            return IsBSTUtil(node.Left, min, node.Value) && IsBSTUtil(node.Right, node.Value, max);
+        }
+
+
         public override string ToString()
         {
             return Root == null ? "{}" : Root.ToString();
@@ -31,9 +142,9 @@ namespace Preps
 
     public class BinaryTree<T>
     {
-        public BinaryTree()
+        public BinaryTree(BinaryTreeNode<T> root = null)
         {
-            Root = null;
+            Root = root;
         }
 
         public virtual void Clear()
@@ -68,9 +179,9 @@ namespace Preps
             }
             set
             {
-                if (Children == null) Children = new NodeList<T>(1);
+                if (Children == null || Children.Count == 0) Children = new NodeList<T>(1);
 
-                Children.Add(value);
+                Children[0] = value;
             }
         }
 
@@ -97,13 +208,13 @@ namespace Preps
         {
             get
             {
-                if (Children == null) return null;
+                if (Children == null || Children.Count != 2) return null;
 
                 return (BinaryTreeNode<T>)Children[0];
             }
             set
             {
-                if (Children == null) Children = new NodeList<T>(2);
+                if (Children == null || Children.Count != 2) Children = new NodeList<T>(2);
 
                 Children[0] = value;
             }
@@ -113,13 +224,13 @@ namespace Preps
         {
             get
             {
-                if (Children == null) return null;
+                if (Children == null || Children.Count != 2) return null;
 
                 return (BinaryTreeNode<T>)Children[1];
             }
             set
             {
-                if (Children == null) Children = new NodeList<T>(2);
+                if (Children == null || Children.Count != 2) Children = new NodeList<T>(2);
 
                 Children[1] = value;
             }

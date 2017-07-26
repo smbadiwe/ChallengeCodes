@@ -12,6 +12,16 @@ namespace PrepTests
     public class PlayProgramsTests
     {
         [Test]
+        public void TicTacToe()
+        {
+            var game = new TicTacToe();
+            var result = Assert.Throws<ArithmeticException>(() => game.Start());
+            Assert.True("Draw" == result.Message ||
+                "Winner: X" == result.Message ||
+                "Winner: O" == result.Message);
+        }
+
+        [Test]
         public void SwapInPlace()
         {
             int[] arr = new[] { 1, 2, 3, 4, 5, 6 };
@@ -19,7 +29,6 @@ namespace PrepTests
             Assert.AreEqual(6, arr[2]);
             Assert.AreEqual(3, arr[5]);
         }
-
         [Test]
         public void Add()
         {

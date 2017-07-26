@@ -1,9 +1,41 @@
 ﻿
 
+using System;
+
 namespace Preps
 {
     public static class BinaryTreeQs
     {
+        public static bool IsBalanced(this BinaryTree t)
+        {
+            return IsBalanced(t.Root);
+        }
+
+        public static bool IsBalanced(BinaryTreeNode<int> node)
+        {
+            return CheckHeight(node) > -1;
+        }
+
+        private static int CheckHeight(BinaryTreeNode<int> node)
+        {
+            if (node == null) return 0;
+
+            var lHeight = CheckHeight(node.Left);
+            if (lHeight == -1) return -1;
+            var rHeight = CheckHeight(node.Right);
+            if (rHeight == -1) return -1;
+
+            if (Math.Abs(rHeight - lHeight) > 1) return -1;
+
+            return Math.Max(lHeight, rHeight) + 1;
+        }
+
+        public static int GetHeight(BinaryTreeNode<int> node)
+        {
+            if (node == null) return 0;
+
+            return Math.Max(GetHeight(node.Left), GetHeight(node.Right)) + 1;
+        }
 
         public static bool isTreeSymmetric(this BinaryTree t)
         {
@@ -123,7 +155,7 @@ namespace Preps
                 return result;
             }
 
-            if (IsBSTUtil(root, int.MinValue, int.MaxValue))
+            if (BinaryTree.IsBSTUtil(root, int.MinValue, int.MaxValue))
             {
                 result.Root = root;
                 return result;
@@ -240,95 +272,6 @@ namespace Preps
                 info.IsBST = false;
                 return 0;
             }
-        }
-
-        public static BinaryTreeNode<int> BSTGetMinimum(this BinaryTree tree)
-        {
-            if (tree.Root == null) return null;
-
-            return BSTGetMinimum(tree.Root);
-        }
-
-        public static BinaryTreeNode<int> BSTGetMaximum(this BinaryTree tree)
-        {
-            if (tree.Root == null) return null;
-
-            return BSTGetMaximum(tree.Root);
-        }
-
-        private static BinaryTreeNode<int> BSTGetMinimum(BinaryTreeNode<int> node)
-        {
-            BinaryTreeNode<int> min = node;
-            while (min.Left != null)
-            {
-                min = min.Left;
-            }
-            return min;
-        }
-
-        private static BinaryTreeNode<int> BSTGetMaximum(BinaryTreeNode<int> node)
-        {
-            BinaryTreeNode<int> min = node;
-            while (min.Right != null)
-            {
-                min = min.Right;
-            }
-            return min;
-        }
-
-        /// <summary>
-        /// Using in-order traversal
-        /// </summary>
-        /// <returns></returns>
-        public static bool IsBST2(this BinaryTree tree)
-        {
-            if (tree.Root == null) return true;
-            return InOrderTraversal(tree.Root, null);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public static bool IsBST(this BinaryTree tree)
-        {
-            if (tree.Root == null) return true;
-
-            return IsBSTUtil(tree.Root, int.MinValue, int.MaxValue);
-        }
-
-        /// <summary>
-        /// Review this view
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="prev"></param>
-        /// <returns></returns>
-        private static bool InOrderTraversal(BinaryTreeNode<int> node, BinaryTreeNode<int> prev)
-        {
-            //This uses inorder traversal
-            if (node != null)
-            {
-                if (!InOrderTraversal(node.Left, prev)) return false;
-
-                // allows only distinct values node
-                if (prev != null && node.Value <= prev.Value) return false;
-                prev = node;
-
-                return InOrderTraversal(node.Right, prev);
-            }
-            return true;
-        }
-
-        private static bool IsBSTUtil(BinaryTreeNode<int> node, int min, int max)
-        {
-            if (node == null) return true;
-
-            // The left subtree of a node contains only nodes with keys less than the node’s key.
-            // The right subtree of a node contains only nodes with keys greater than the node’s key.
-            if (node.Value < min || node.Value > max) return false;
-
-            // Both the left and right subtrees must also be binary search trees.
-            return IsBSTUtil(node.Left, min, node.Value) && IsBSTUtil(node.Right, node.Value, max);
         }
 
     }

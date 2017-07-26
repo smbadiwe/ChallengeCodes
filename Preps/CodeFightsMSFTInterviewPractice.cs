@@ -283,7 +283,7 @@ namespace Preps
 
             // Get the item in the dictionary that corresponds to the highes form of the number given
             var power = (int)Math.Log10(number);
-            KeyValuePair<int, string> theItem = new KeyValuePair<int, string>(0, "");
+            var theItem = new KeyValuePair<int, string>(0, "");
             foreach (var item in powersOf10)
             {
                 if (item.Key == power)
@@ -302,8 +302,7 @@ namespace Preps
             var part = (int)(number / dividend);
 
             number = (int)(number % dividend);
-            string result = "";
-            result += string.Format("{0} {1} {2}", integerToEnglishWords(part), theItem.Value, integerToEnglishWords(number));
+            string result = string.Format("{0} {1} {2}", integerToEnglishWords(part), theItem.Value, integerToEnglishWords(number));
 
             return result.Trim();
         }

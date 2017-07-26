@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -12,12 +13,14 @@ namespace Preps
         public string number;
 
     }
-   partial class Program
+    partial class Program
     {
-        static int fibDP(int n) {
+        static int fibDP(int n)
+        {
             if (n <= 2) return 1;
             int a = 1, b = 1, result = 0;
-            for (int i = 3; i <= n; i++) {
+            for (int i = 3; i <= n; i++)
+            {
                 result = a + b;
                 a = b;
                 b = result;
@@ -25,16 +28,19 @@ namespace Preps
 
             return result;
         }
-        
-        static int fibRecursion(int n) {
+
+        static int fibRecursion(int n)
+        {
             if (n <= 2) return 1;
             return fibRecursion(n - 1) + fibRecursion(n - 2);
         }
 
-        static int fibRecursion(int n, int k) {
+        static int fibRecursion(int n, int k)
+        {
             if (n <= 2) return 1;
             int sum = 0, i = 1;
-            while (i <= k) {
+            while (i <= k)
+            {
                 sum += fibRecursion(n - i);
                 i++;
             }
@@ -42,7 +48,8 @@ namespace Preps
         }
 
         //HCK 1
-        static string electionWinner(string[] votes) {
+        static string electionWinner(string[] votes)
+        {
 
             if (votes.Length == 1) return votes[0];
             // get the candidates
@@ -51,11 +58,13 @@ namespace Preps
 
             // build the tally
             var tally = new Dictionary<string, int>(candidates.Count);
-            foreach (var candidate in candidates) {
+            foreach (var candidate in candidates)
+            {
                 tally.Add(candidate, 0);
             }
             // apply vote
-            foreach (var vote in votes) {
+            foreach (var vote in votes)
+            {
                 tally[vote]++;
             }
 
@@ -63,13 +72,18 @@ namespace Preps
             // get the winner
             int winCount = -1;
             var winners = new List<string>();
-            foreach (var winner in tally.OrderByDescending(x => x.Value)) {
-                if (winCount == -1) {
+            foreach (var winner in tally.OrderByDescending(x => x.Value))
+            {
+                if (winCount == -1)
+                {
                     winCount = winner.Value;
                 }
-                if (winCount == winner.Value) {
+                if (winCount == winner.Value)
+                {
                     winners.Add(winner.Key);
-                } else {
+                }
+                else
+                {
                     break;
                 }
             }
@@ -87,58 +101,63 @@ namespace Preps
         /// </summary>
         /// <param name="a"></param>
         /// <param name="d"></param>
-        static void LeftRotateArray(int[] a, int d) {
+        static void LeftRotateArray(int[] a, int d)
+        {
             int n = a.Length;
             int diff = n - d;
             var newArr = new int[n];
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
+            {
                 newArr[(i + diff) % n] = a[i];
             }
 
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
+            {
                 Console.Write("{0} ", newArr[i]);
             }
         }
 
-        static void Main(string[] args) {
-
-            //string[] tokens_m = Console.ReadLine().Split(' ');
-            //int m = 6; // Convert.ToInt32(tokens_m[0]);
-            //int n = 4; // Convert.ToInt32(tokens_m[1]);
-            string[] magazine = "give me one grand ONE today night".Split(' ');
-            string[] ransom = "give one grand today".Split(' ');
-            //var magSet = new HashSet<string>(magazine);
-            //var ransomSet = new HashSet<string>(ransom);
-
-            //var magDict = new Dictionary<string, int>(magSet.Count, StringComparer.InvariantCulture);
-            //foreach (var str in magSet) {
-            //    magDict.Add(str, 0);
-            //}
-            //foreach (var str in magazine) {
-            //    magDict[str]++;
-            //}
-            //var ransomDict = new Dictionary<string, int>(ransomSet.Count, StringComparer.InvariantCulture);
-            //foreach (var str in ransomSet) {
-            //    ransomDict.Add(str, 0);
-            //}
-            //foreach (var str in ransom) {
-            //    ransomDict[str]++;
-            //}
-
-            var magDict = magazine.GroupBy(x => x).ToDictionary(x => x.Key, x => x.Count(), StringComparer.InvariantCulture);
-            var ransomDict = ransom.GroupBy(x => x).ToDictionary(x => x.Key, x => x.Count(), StringComparer.InvariantCulture);
-
-            foreach (var item in ransomDict) {
-                int count;
-                if (!magDict.TryGetValue(item.Key, out count) || count != item.Value) {
-                    Console.WriteLine("No");
-                    return;
-                }
+        static void Main(string[] args)
+        {
+            int des = 1, i = 0;
+            while (i < 9)
+            {
+                i++;
+                des *= 10;
             }
-
-            Console.WriteLine("Yes");
+            Console.WriteLine("i = " + i + ". des = " + des);
+            //var stack = new StackWithMin();
+            //stack.Push(2);
+            //stack.Push(22);
+            //stack.Push(12);
+            //stack.Push(32);
+            //stack.Push(42);
+            //var sorted = stack.Sort();
+            //while (sorted.Count > 0)
+            //{
+            //    Console.WriteLine(sorted.Pop());
+            //}
+            //new TowerOfHanoi().MoveDisks(4);
+            //var ctci = new CTCI();
+            //var input = 4; // "abc"; // new List<int> { 1, 2, 3 };
+            //var output = ctci.GetParentheses(input);
+            //foreach (var set in output)
+            //{
+            //    if (set.Length == 0)
+            //        Console.WriteLine("{ }");
+            //    else
+            //    {
+            //        Console.Write("{ ");
+            //        foreach (var item in set)
+            //        {
+            //            Console.Write("{0} ", item);
+            //        }
+            //        Console.WriteLine("}");
+            //    }
+            //}
+            Console.ReadKey();
         }
-        
+
         static long Factorial(long n)
         {
             return (n < 2) ? 1 : n * Factorial(n - 1);
@@ -187,7 +206,7 @@ namespace Preps
 
             return char.MinValue;
         }
-        
+
         /// <summary>
         /// In a given sorted array of integers remove all the duplicates.
         /// </summary>
@@ -315,7 +334,7 @@ namespace Preps
             }
             return true;
         }
-        
+
     }
 
 }

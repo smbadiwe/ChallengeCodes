@@ -6,6 +6,188 @@ namespace Preps
 {
     public class CodeFightsArcade
     {
+        public static string findEmailDomain(string address)
+        {
+            // Best
+            // return address.Substring(address.LastIndexOf('@')+1);
+            int index = address.IndexOf("\"@");
+            if (index < 0)
+            {
+                index = address.IndexOf("@");
+                if (index < 0) return "";
+            }
+            else
+            {
+                index++;
+            }
+            return address.Substring(index + 1);
+        }
+
+        public static string longestDigitsPrefix(string inputString)
+        {
+            int i = -1;
+            foreach (var ch in inputString)
+            {
+                if (char.IsDigit(ch)) i++;
+
+                else break;
+            }
+            return inputString.Substring(0, i);
+        }
+
+        /// <summary>
+        /// You found two items in a treasure chest! The first item weighs weight1 and is worth value1, 
+        /// and the second item weighs weight2 and is worth value2. What is the total maximum value of the 
+        /// items you can take with you, assuming that your max weight capacity is maxW and you can't come 
+        /// back for the items later?
+        /// </summary>
+        /// <param name="value1"></param>
+        /// <param name="weight1"></param>
+        /// <param name="value2"></param>
+        /// <param name="weight2"></param>
+        /// <param name="maxW"></param>
+        /// <returns></returns>
+        public static int knapsackLight(int value1, int weight1, int value2, int weight2, int maxW)
+        {
+            if (weight1 > maxW && weight2 > maxW)
+            {
+                return 0;
+            }
+
+            if (weight1 == maxW && weight2 == weight1)
+            {
+                return Math.Max(value1, value2);
+            }
+            
+            if (weight1 == maxW)
+            {
+                if (weight2 < weight1)
+                    return Math.Max(value1, value2);
+                return value1;
+            }
+
+            if (weight2 == maxW)
+            {
+                if (weight1 < weight2)
+                    return Math.Max(value1, value2);
+                return value2;
+            }
+
+            if ((weight1 < maxW && weight2 > maxW) || (weight2 > maxW && weight1 <= maxW))
+            {
+                return value1;
+            }
+            
+            if ((weight1 > maxW && weight2 <= maxW) || (weight2 < maxW && weight1 > maxW))
+            {
+                return value2;
+            }
+
+            if (weight1 + weight2 > maxW)
+            {
+                if (weight1 < maxW && weight2 < maxW)
+                {
+                    return Math.Max(value1, value2);
+                }
+
+                return 0;
+            }
+
+            return value1 + value2;
+        }
+
+
+        /// <summary>
+        /// Given array of integers, find the maximal possible sum of some of its k consecutive elements.
+        /// </summary>
+        /// <param name="inputArray"></param>
+        /// <param name="k"></param>
+        /// <returns></returns>
+        public static int arrayMaxConsecutiveSum(int[] inputArray, int k)
+        {
+            int prevSum = 0, max = 0; //min value of element is 1
+            int arrLen = inputArray.Length;
+            // the first set
+            for (int j = 0; j < k; j++)
+            {
+                max += inputArray[j];
+            }
+            prevSum = max;
+            for (int i = 1; i <= arrLen - k; i++)
+            {
+                // sum of next N-item = previous sum - first item in previous sub-array + last item in next sub-array
+                int currentSum = prevSum - inputArray[i - 1] + inputArray[i - 1 + k];
+                if (currentSum > max)
+                {
+                    max = currentSum;
+                }
+                prevSum = currentSum;
+            }
+            return max;
+        }
+        int[] extractEachKth(int[] arr, int k)
+        {
+            var list = new List<int>();
+            int tracker = 1;
+            foreach (var item in arr)
+            {
+                if (tracker == k)
+                {
+                    tracker = 1;
+                    continue;
+                }
+                list.Add(item);
+                tracker++;
+            }
+            return list.ToArray();
+
+            // even better
+            // return arr.Where((n, i) => (i + 1) % k != 0).ToArray();
+        }
+        public static bool stringsRearrangement(string[] inputArray)
+        {
+            bool success = false;
+            findSequence(inputArray, null, new bool[inputArray.Length], 0, ref success);
+            return success;
+        }
+        
+        // recursive findSequence procedure to find admissible
+        // sequence of strings in the array. String prev is the
+        // previous string in ??? sequence, used[] keeps track 
+        // of ????? strings have been used so far, and n is the
+        // current ?????? of the sequence.
+        private static void findSequence(string[] a, string prev, bool[] used, int n, ref bool success)
+        {
+            if (n == a.Length)
+            {
+                success = true;
+                return;
+            }
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (!used[i] && (prev == null || differByOne(prev, a[i])))
+                {
+                    used[i] = true;
+                    findSequence(a, a[i], used, n + 1, ref success);
+                    used[i] = false;
+                }
+            }
+        }
+
+        private static bool differByOne(string a, string b)
+        {
+            int count = 0;
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (a[i] != b[i])
+                {
+                    count++;
+                }
+            }
+            return count == 1;
+        }
+
+
         /// <summary>
         /// Given a sorted array of integers a, find such an integer x that the value of
         /// abs(a[0] - x) + abs(a[1] - x) + ... + abs(a[a.length - 1] - x)

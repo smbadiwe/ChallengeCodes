@@ -10,6 +10,14 @@ namespace PrepTests
     public class CodeFightsAMZNInterviewPracticeTests
     {
         [Test]
+        public void totalScore()
+        {
+            var input = new[] { "5", "-2", "4", "Z", "X", "9", "+", "+" };
+            var result = CodeFightsAMZNInterviewPractice.totalScore(input, 8);
+            Assert.AreEqual(27, result);
+        }
+
+        [Test]
         public void pressingButtons_Test()
         {
             var input = "42";

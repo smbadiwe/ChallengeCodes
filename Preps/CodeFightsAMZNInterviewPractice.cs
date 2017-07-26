@@ -8,6 +8,157 @@ namespace Preps
 {
     public static class CodeFightsAMZNInterviewPractice
     {
+        #region Real interview
+        public static string[,] matchLunches(string[,] lunchMenuPairs, string[,] teamCuisinePreference)
+        {
+            // WRITE YOUR CODE HERE
+            var lunchMenuPairsDict = new Dictionary<string, string>();
+            for (int i = 0; i < lunchMenuPairs.Length / 2; i++)
+            {
+                lunchMenuPairsDict.Add(lunchMenuPairs[i, 0], lunchMenuPairs[i, 1]);
+            }
+            var teamCuisinePreferenceDict = new Dictionary<string, string>();
+            for (int i = 0; i < teamCuisinePreference.Length / 2; i++)
+            {
+                teamCuisinePreferenceDict.Add(teamCuisinePreference[i, 0], teamCuisinePreference[i, 1]);
+            }
+            var options = new List<KeyValuePair<string, string>>();
+            foreach (var item in teamCuisinePreferenceDict)
+            {
+                if (item.Value == "*")
+                {
+                    foreach (var menu in lunchMenuPairsDict)
+                    {
+                        options.Add(new KeyValuePair<string, string>(item.Key, menu.Key));
+                    }
+                }
+                else
+                {
+                    foreach (var menu in lunchMenuPairsDict)
+                    {
+                        if (menu.Value == item.Value)
+                            options.Add(new KeyValuePair<string, string>(item.Key, menu.Key));
+                    }
+                }
+            }
+            
+            options = options.OrderBy(x => x.Key).ToList();
+            var result = new string[options.Count, 2];
+            for (int i = 0; i < options.Count; i++)
+            {
+                var val = options[i];
+                result[i, 0] = val.Key;
+                result[i, 1] = val.Value;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// O(n) time and space
+        /// </summary>
+        /// <param name="blocks"></param>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public static int totalScore1(string[] blocks, int n)
+        {
+            // WRITE YOUR CODE HERE
+            var stack = new Stack<string>();
+            foreach (string score in blocks)
+            {
+                if (score == "Z")
+                {
+                    stack.Pop();
+                }
+                else
+                {
+                    stack.Push(score);
+                }
+            }
+            int lastScore = 0, currentScore = 0, totalScore = 0;
+            var set = stack.Reverse().ToArray();
+            foreach (string score in set)
+            {
+                // The final act is usually to set currentScore.
+                // This means that currentScore will usually retain its 
+                // value at the previous iteration
+                switch (score)
+                {
+                    case "X":
+                        // double the last score
+                        lastScore = currentScore;
+                        currentScore = 2 * lastScore;
+                        totalScore += currentScore;
+                        break;
+                    case "+":
+                        // sum of the last two scores
+                        var temp = currentScore;
+                        currentScore += lastScore;
+                        lastScore = temp;
+                        totalScore += currentScore;
+                        break;
+                    default:
+                        int val;
+                        if (int.TryParse(score, out val))
+                        {
+                            lastScore = currentScore;
+                            currentScore = val;
+                            totalScore += currentScore;
+                        }
+                        break;
+                }
+            }
+            return totalScore;
+        }
+        
+        /// <summary>
+        /// Time O(n); space O(1)
+        /// </summary>
+        /// <param name="blocks"></param>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public static int totalScore(string[] blocks, int n)
+        {
+            // WRITE YOUR CODE HERE
+            n = blocks.Length; // redundant
+            int lastScore = 0, currentScore = 0, totalScore = 0;
+            for( int i = 0; i < n; i++)
+            {
+                if ((blocks[i] == "Z") || ((i + 1) < n && blocks[i + 1] == "Z")) continue;
+
+                // The final act is usually to set currentScore and update the total.
+                // This means that currentScore will usually retain its 
+                // value at the previous iteration
+                switch (blocks[i])
+                {
+                    case "X":
+                        // double the last score
+                        lastScore = currentScore;
+                        currentScore = 2 * lastScore;
+                        totalScore += currentScore;
+                        break;
+                    case "+":
+                        // sum of the last two scores
+                        var temp = currentScore;
+                        currentScore += lastScore;
+                        lastScore = temp;
+                        totalScore += currentScore;
+                        break;
+                    default:
+                        int val;
+                        if (int.TryParse(blocks[i], out val))
+                        {
+                            lastScore = currentScore;
+                            currentScore = val;
+                            totalScore += currentScore;
+                        }
+                        break;
+                }
+            }
+            return totalScore;
+        }
+
+        #endregion
+
         #region Subset sum (Partition Problem)
         /// <summary>
         /// O(2^n) time
@@ -93,7 +244,7 @@ namespace Preps
             }
 
             return grid[sum / 2][n];
-        } 
+        }
         #endregion
 
         public static string[] pressingButtons(string buttons)
