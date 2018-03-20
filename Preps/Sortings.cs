@@ -99,6 +99,7 @@ namespace Preps
                 else
                     tmp[k++] = a[right++];
 
+
             while (left <= leftEnd)    // Copy rest of first half
                 tmp[k++] = a[left++];
 

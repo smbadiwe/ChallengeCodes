@@ -80,38 +80,6 @@ namespace Preps
             return start + c + end; 
         }
 
-        // Write a method to return all subsets of a set
-        public List<List<int>> GetSubsets(List<int> set)
-        {
-            return GetSubsets(set, set.Count - 1);
-        }
-
-        private List<List<int>> GetSubsets(List<int> set, int index)
-        {
-            var allSubsets = new List<List<int>>();
-            if (index == -1)
-            {
-                // Base case: empty set
-                allSubsets.Add(new List<int>());
-            }
-            else
-            {
-                // Generating P(n) for the general case is just a simple generalization:
-                // We compute P(n-l), clone the results, and then add a_n to each of these cloned sets. 
-                allSubsets = GetSubsets(set, index - 1);
-                var theRest = new List<List<int>>();
-                int item = set[index];
-                foreach (var subset in allSubsets)
-                {
-                    var newSubset = new List<int>(1 + subset.Count);
-                    newSubset.AddRange(subset);
-                    newSubset.Add(item);
-
-                    theRest.Add(newSubset);
-                }
-                allSubsets.AddRange(theRest);
-            }
-            return allSubsets;
-        }
+       
     }
 }

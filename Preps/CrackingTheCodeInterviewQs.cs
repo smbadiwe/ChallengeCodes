@@ -93,6 +93,8 @@ namespace Preps
 
         /// <summary>
         /// Assumptions: str1 and str2 are lowercase characters a-z.
+        /// An anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+        /// For example, the word anagram can be rearranged into "naga ram".
         /// O(n). Don't use a dictionary; it'll be slower.
         /// </summary>
         /// <param name="str1"></param>

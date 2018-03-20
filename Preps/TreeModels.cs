@@ -23,7 +23,7 @@ namespace Preps
                 Max = int.MaxValue;
             }
         }
-        
+
         public void PrintAllNodesAtDistance(int k)
         {
             PrintAllNodesAtDistance(Root, k);
@@ -42,16 +42,6 @@ namespace Preps
 
             PrintAllNodesAtDistance(node.Left, k - 1);
             PrintAllNodesAtDistance(node.Right, k - 1);
-        }
-
-        /// <summary>
-        /// Using in-order traversal - NOT SURE if this works
-        /// </summary>
-        /// <returns></returns>
-        public bool IsBST2()
-        {
-            if (this.Root == null) return true;
-            return InOrderTraversal(this.Root, null);
         }
 
         /// <summary>
@@ -258,7 +248,7 @@ namespace Preps
         public TrieNode<T> Parent { get; set; }
         public bool IsLeaf
         {
-           get { return Children.Count == 0; }
+            get { return Children.Count == 0; }
         }
 
         public virtual TrieNode<T> FindChildNode(T c)

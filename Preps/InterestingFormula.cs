@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Preps
 {
-    partial class Program // class InterestingFormula
+    partial class ProgramOld // class InterestingFormula
     {
         /// <summary>
         /// Returns the <paramref name="n"/>-th Catalan Number

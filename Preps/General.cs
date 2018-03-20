@@ -8,6 +8,9 @@ namespace Preps
 {
     public class General
     {
+
+
+
         public static int[] ReplaceWithGreatestElementFromRight(int[] arr)
         {
             var len = arr.Length;

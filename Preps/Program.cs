@@ -1,340 +1,149 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using Preps.Facebook;
+using Preps.Google;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Preps
 {
-    public struct PErson
+    class Program
     {
-        public string name;
-        public string number;
-
-    }
-    partial class Program
-    {
-        static int fibDP(int n)
+        static TopCoder coder = new TopCoder();
+        static MergeSort msort = new MergeSort();
+        static QuickSort qsort = new QuickSort();
+        static BucketSort binsort = new BucketSort();
+        static Misc misc = new Misc();
+        static Semaphore threadPool = new Semaphore(3, 5);
+        static void DoTask(int threadId)
         {
-            if (n <= 2) return 1;
-            int a = 1, b = 1, result = 0;
-            for (int i = 3; i <= n; i++)
-            {
-                result = a + b;
-                a = b;
-                b = result;
-            }
+            threadPool.WaitOne();
 
-            return result;
-        }
+            Console.WriteLine("Thread {0} is inside the critical section...", threadId);
 
-        static int fibRecursion(int n)
-        {
-            if (n <= 2) return 1;
-            return fibRecursion(n - 1) + fibRecursion(n - 2);
-        }
+            Thread.Sleep(10000);
 
-        static int fibRecursion(int n, int k)
-        {
-            if (n <= 2) return 1;
-            int sum = 0, i = 1;
-            while (i <= k)
-            {
-                sum += fibRecursion(n - i);
-                i++;
-            }
-            return sum;
-        }
-
-        //HCK 1
-        static string electionWinner(string[] votes)
-        {
-
-            if (votes.Length == 1) return votes[0];
-            // get the candidates
-            var candidates = new HashSet<string>(votes);
-            if (candidates.Count == 1) return votes[0];
-
-            // build the tally
-            var tally = new Dictionary<string, int>(candidates.Count);
-            foreach (var candidate in candidates)
-            {
-                tally.Add(candidate, 0);
-            }
-            // apply vote
-            foreach (var vote in votes)
-            {
-                tally[vote]++;
-            }
-
-
-            // get the winner
-            int winCount = -1;
-            var winners = new List<string>();
-            foreach (var winner in tally.OrderByDescending(x => x.Value))
-            {
-                if (winCount == -1)
-                {
-                    winCount = winner.Value;
-                }
-                if (winCount == winner.Value)
-                {
-                    winners.Add(winner.Key);
-                }
-                else
-                {
-                    break;
-                }
-            }
-            if (winners.Count == 1) return winners[0];
-
-            return winners.OrderBy(x => x).Last();
-        }
-
-        /// <summary>
-        /// A left rotation operation on an array of size  
-        /// shifts each of the array's elements  unit to the left. For example, if left rotations 
-        /// are performed on array , then the array would become .
-        /// Given an array of  integers and a number, , perform  left rotations on the array.
-        /// Then print the updated array as a single line of space-separated integers.
-        /// </summary>
-        /// <param name="a"></param>
-        /// <param name="d"></param>
-        static void LeftRotateArray(int[] a, int d)
-        {
-            int n = a.Length;
-            int diff = n - d;
-            var newArr = new int[n];
-            for (int i = 0; i < n; i++)
-            {
-                newArr[(i + diff) % n] = a[i];
-            }
-
-            for (int i = 0; i < n; i++)
-            {
-                Console.Write("{0} ", newArr[i]);
-            }
+            threadPool.Release();
         }
 
         static void Main(string[] args)
         {
-            int des = 1, i = 0;
-            while (i < 9)
-            {
-                i++;
-                des *= 10;
-            }
-            Console.WriteLine("i = " + i + ". des = " + des);
-            //var stack = new StackWithMin();
-            //stack.Push(2);
-            //stack.Push(22);
-            //stack.Push(12);
-            //stack.Push(32);
-            //stack.Push(42);
-            //var sorted = stack.Sort();
-            //while (sorted.Count > 0)
+            Console.WriteLine(FromCareerCup.IsOrdered(new[] { "cc", "cb", "bb", "ac" }, "abc".ToCharArray()));
+            Console.WriteLine(FromCareerCup.IsOrdered(new[] { "cc", "cb", "bb", "ac" }, "cba".ToCharArray()));
+            Console.WriteLine(FromCareerCup.IsOrdered(new[] { "cc", "cb", "bb", "ac" }, "bca".ToCharArray()));
+            Console.WriteLine(FromCareerCup.IsOrdered(new[] { "cc", "cb", "bb", "ac", "cat", "aab" }, "cba".ToCharArray()));
+            //var mAvg = new FromCareerCup.MovingAvg(3);
+            //foreach (var num in Enumerable.Range(1, 10))
             //{
-            //    Console.WriteLine(sorted.Pop());
+            //    Console.WriteLine("New Num: {0}. Ang: {1}", num, mAvg.GetMovingAverage(num));
             //}
-            //new TowerOfHanoi().MoveDisks(4);
-            //var ctci = new CTCI();
-            //var input = 4; // "abc"; // new List<int> { 1, 2, 3 };
-            //var output = ctci.GetParentheses(input);
-            //foreach (var set in output)
+
+            //Console.WriteLine("OneEditApart('cat', 'cat') = {0}", Prepping.OneEditApart("cat", "cat"));
+            //Console.WriteLine("OneEditApart('cat', 'dog') = {0}", Prepping.OneEditApart("cat", "dog"));
+            //Console.WriteLine("OneEditApart('cat', 'cats') = {0}", Prepping.OneEditApart("cat", "cats"));
+            //Console.WriteLine("OneEditApart('cat', 'cut') = {0}", Prepping.OneEditApart("cat", "cut"));
+            //Console.WriteLine("OneEditApart('cat', 'cast') = {0}", Prepping.OneEditApart("cat", "cast"));
+            //Console.WriteLine("OneEditApart('cat', 'at') = {0}", Prepping.OneEditApart("cat", "at"));
+            //Console.WriteLine("OneEditApart('cat', 'act') = {0}", Prepping.OneEditApart("cat", "act"));
+
+
+            //Prepping.print_look_and_say_seq(10);
+
+            //var arr = Prepping.Spiral(8);
+            //var sb = new StringBuilder();
+            //for (int i = 0; i < arr.Length; i++)
             //{
-            //    if (set.Length == 0)
-            //        Console.WriteLine("{ }");
-            //    else
+            //    for (int j = 0; j < arr[i].Length; j++)
             //    {
-            //        Console.Write("{ ");
-            //        foreach (var item in set)
-            //        {
-            //            Console.Write("{0} ", item);
-            //        }
-            //        Console.WriteLine("}");
+            //        sb.AppendFormat("{0}\t", arr[i][j]);
             //    }
+            //    sb.AppendLine();
             //}
+            //Console.WriteLine(sb);
+
+            //var people = new []
+            //{
+            //    //new Prepping.Person { Birth = 2000, Death = 2001 },
+            //    //new Prepping.Person { Birth = 2001, Death = 2002 },
+            //    new Prepping.Person { Birth = 2011, Death = 2018 },
+            //    new Prepping.Person { Birth = 2000, Death = 2010 },
+            //    new Prepping.Person { Birth = 1999, Death = 2018 },
+            //    new Prepping.Person { Birth = 1970, Death = 1999 },
+            //    new Prepping.Person { Birth = 2002, Death = 2006 },
+            //    new Prepping.Person { Birth = 1970, Death = 2005 },
+            //    new Prepping.Person { Birth = 1983, Death = 2010 },
+            //    new Prepping.Person { Birth = 1971, Death = 2005 },
+            //};
+
+            //int ans = Prepping.GetYearWithMostAlive_Solution2(people);
+            //Console.WriteLine("Year with most alive: {0}", ans);
+
+
+            //Combinatrionics.PrintWords("497");//1927
+            //var subsets = Combinatrionics.GetSubsets_BitArray(new List<string> { "app", "bed", "car", "dop" });
+            //foreach (var subset in subsets)
+            //{
+            //    Console.Write("{ ");
+            //    Console.Write("{0} ", string.Join(" ", subset));
+            //    Console.WriteLine("}");
+            //}
+            //var combis = Combinatrionics.Combinations("abcd");
+            //foreach (var subset in combis)
+            //{
+            //    Console.Write("{ ");
+            //    Console.Write("{0} ", subset);
+            //    Console.WriteLine("}");
+            //}
+            //new Qns().PrintAllCombinations(new[]
+            //{
+            //    new[] {1,2,3},
+            //    new[] {4,5},
+            //    //new[] {6,7,8},
+            //    //new[] {9},
+            //});
+            //Console.WriteLine(new Qns().GetNearest(new[] { 1, 3, 5 }, 4));
+            //new ProducerConsumer().Run(10);
+            //new DiningPhilosophers().StartEating();
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    int j = i;
+            //   Task.Factory.StartNew(() => DoTask(j));
+            //}
+            ////var ans = coder.canObtain("BBBBABABBBBBBA", "BBBBABABBABBBBBBABABBBBBBBBABAABBBAA");
+            //var ans = misc.combination(5,3);
+            //Console.WriteLine(ans);
+            //var arr = new[] { 12, 11, 13, 5, 6, 7 };
+            //qsort.Sort(arr);
+            //var kthSmallest = misc.kthLargestElement(arr, 4);
+            //Console.WriteLine("kthSmallest: {0}", kthSmallest);
+            //Console.WriteLine("Sorted: {0}", arr.PrintList());
+            //var linkedList = new LinkedListNode<int>(12)
+            //{
+            //    Next = new LinkedListNode<int>(11)
+            //    {
+            //        Next = new LinkedListNode<int>(13)
+            //        {
+            //            Next = new LinkedListNode<int>(5)
+            //            {
+            //                Next = new LinkedListNode<int>(6)
+            //                {
+            //                    Next = new LinkedListNode<int>(7)
+            //                    {
+            //                        Next = null
+            //                    }
+            //                }
+            //            }
+            //        }
+            //    }
+            //};
+            //Console.WriteLine("List: {0}", linkedList.PrintList());
+            //linkedList = sort.Sort(linkedList);
+            //Console.WriteLine("Sorted: {0}", linkedList.PrintList());
+
             Console.ReadKey();
         }
 
-        static long Factorial(long n)
-        {
-            return (n < 2) ? 1 : n * Factorial(n - 1);
-        }
-
-        static long Factorial2(long n)
-        {
-            long i = 1, result = 1;
-            while (i <= n)
-            {
-                result *= i;
-                i++;
-            }
-            return result;
-        }
-
-        //static BigInteger Factorial3(int n)
-        //{
-        //    int i = 1;
-        //    BigInteger result = 1;
-        //    while (i <= n)
-        //    {
-        //        result *= i;
-        //        i++;
-        //    }
-        //    return result;
-        //}
-
-        /// <summary>
-        /// Describe and code an algorithm that returns the first duplicate character in a string
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        static char GetFirstDuplicateCharacter(string str)
-        {
-            if (!string.IsNullOrWhiteSpace(str))
-            {
-                var set = new HashSet<char>();
-                foreach (var ch in str)
-                {
-                    if (set.Add(ch)) continue;
-
-                    return ch;
-                }
-            }
-
-            return char.MinValue;
-        }
-
-        /// <summary>
-        /// In a given sorted array of integers remove all the duplicates.
-        /// </summary>
-        /// <param name="sortedArray"></param>
-        static void RemoveDuplicates(int[] sortedArray)
-        {
-            var result = new List<int>();
-            int dupInd;
-            for (int i = 0; i < sortedArray.Length; i++)
-            {
-                if (i > 0)
-                {
-                    if (sortedArray[i - 1] == sortedArray[i])
-                    {
-                        dupInd = i;
-                        continue;
-                    }
-                }
-                dupInd = -1;
-                result.Add(sortedArray[i]);
-            }
-
-            var sb = new StringBuilder();
-            for (int i = 0; i < result.Count; i++)
-            {
-                sb.AppendFormat("{0} ", result[i]);
-            }
-            Console.WriteLine(sb);
-        }
-
-        /// <summary>
-        /// Given an array of numbers, replace each number with the product of all the
-        /// numbers in the array except the number itself *without* using division.
-        /// </summary>
-        /// <param name="nums"></param>
-        static void ReplaceEachWithProduct(int[] nums)
-        {
-            //Given an array of numbers, replace each number with the product of all the
-            //numbers in the array except the number itself *without* using division.
-            var sb = new StringBuilder();
-            for (int i = 0; i < nums.Length; i++)
-            {
-                int product = 1;
-                for (int j = 0; j < i; j++)
-                {
-                    product *= nums[j];
-                }
-                for (int j = i + 1; j < nums.Length; j++)
-                {
-                    product *= nums[j];
-                }
-                sb.AppendFormat("{0} ", product);
-            }
-            Console.WriteLine(sb);
-        }
-
-        static int Power(int num, int index)
-        {
-            if (num == 0) return 0;
-            if (num == 1) return num;
-            if (index == 0) return 1;
-
-            int ans = 1;
-            while (index > 0)
-            {
-                ans *= num;
-                index--;
-            }
-            return ans;
-        }
-
-        static int CheckLongestPalindrom(string s)
-        {
-            //This is cryptic
-            char[] strArray = s.ToArray();
-            int left = 0, right = s.Length - 1, count = 1;
-            string leftStr = "", rightStr = "";
-            while (left < right)
-            {
-                leftStr += strArray[left];
-                rightStr = strArray[right] + rightStr;
-                if (leftStr.Equals(rightStr))
-                {
-                    count += 2;
-                    leftStr = rightStr = "";
-                }
-                left++;
-                right--;
-            }
-            return count;
-        }
-
-        static void PrintMultiplicationTable()
-        {
-            var sb = new StringBuilder();
-            for (int i = 1; i <= 12; i++)
-            {
-                for (int j = 1; j <= 12; j++)
-                {
-                    sb.AppendFormat("{0}\t", i * j);
-                }
-                sb.AppendLine();
-            }
-            Console.WriteLine(sb);
-        }
-
-        static bool IsMatch(string[] pattern, string[] set)
-        {
-            if (pattern == null && set == null) return false;
-            if ((pattern == null && set != null) || (pattern != null && set == null)) return false;
-            if (pattern.Length != set.Length) return false;
-
-            var dict = new Dictionary<string, string>();
-            for (int i = 0; i < pattern.Length; i++)
-            {
-                string str;
-                if (dict.TryGetValue(pattern[i], out str))
-                {
-                    if (str != set[i]) return false;
-                }
-                else
-                {
-                    dict[pattern[i]] = set[i];
-                }
-            }
-            return true;
-        }
-
     }
-
 }

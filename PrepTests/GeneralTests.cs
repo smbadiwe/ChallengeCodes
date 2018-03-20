@@ -1,16 +1,30 @@
 ﻿using NUnit.Framework;
 using Preps;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PrepTests
 {
+    public static class Vest
+    {
+        public static string Normalize(this decimal amount)
+        {
+            return (Math.Round(amount, 2) / 1.000000000000000000000000000000000m).ToString();
+        }
+    }
+
     [TestFixture]
     public class GeneralTests
     {
+        [Test]
+        public void TestDecimals()
+        {
+            decimal dd = (decimal)19.00;
+            Assert.AreEqual("19", dd.Normalize());
+            dd = (decimal)19.55;
+            Assert.AreEqual("19.55", dd.Normalize());
+            dd = (decimal)19.3456;
+            Assert.AreEqual("19.35", dd.Normalize());
+        }
         [Test]
         public void ReplaceWithGreatestElementFromRight()
         {

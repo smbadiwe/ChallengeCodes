@@ -52,19 +52,38 @@
     <Compile Include="CodeFightsSkillTest.cs" />
     <Compile Include="CodeFightsSkillTest2.cs" />
     <Compile Include="Codility.cs" />
+    <Compile Include="Combinatrionics.cs" />
     <Compile Include="CrackingTheCodeInterviewQs.cs" />
     <Compile Include="CTCI.cs" />
     <Compile Include="CTCI.LineAndPoints.cs" />
+    <Compile Include="Facebook\FromCareerCup.cs" />
+    <Compile Include="Facebook\Prepping.cs" />
     <Compile Include="General.cs" />
+    <Compile Include="Google\BinaryTree.cs" />
+    <Compile Include="Google\BucketSort.cs" />
+    <Compile Include="Google\DiningPhilosophers.cs" />
+    <Compile Include="Google\Extensions.cs" />
+    <Compile Include="Google\LeftLeaningRedBlackTree.cs" />
+    <Compile Include="Google\LinkedListNode.cs" />
+    <Compile Include="Google\MergeSort.cs" />
+    <Compile Include="Google\Misc.cs" />
+    <Compile Include="Google\ProducerConsumer.cs" />
+    <Compile Include="Google\Qns.cs" />
+    <Compile Include="Google\QuickSort.cs" />
+    <Compile Include="Google\RedBlackTree.cs" />
+    <Compile Include="Google\TopCoder.cs" />
     <Compile Include="HackerRank.cs" />
     <Compile Include="HumanBeing.cs" />
     <Compile Include="InterestingFormula.cs" />
     <Compile Include="LinkedListImpl.cs" />
     <Compile Include="LinkedListQs.cs" />
+    <Compile Include="MicrosoftPreps.cs" />
     <Compile Include="MinHeap.cs" />
     <Compile Include="OOAD\ElevatorDesign\Elevator.cs" />
+    <Compile Include="OutCo.cs" />
     <Compile Include="PlayPrograms.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ProgramOld.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueueUsingLinkedList.cs" />
     <Compile Include="QueueUsingOneStack.cs" />
@@ -77,6 +96,7 @@
     <Compile Include="Tree.cs" />
     <Compile Include="TreeModels.cs" />
     <Compile Include="Trie.cs" />
+    <Compile Include="Trie2.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
