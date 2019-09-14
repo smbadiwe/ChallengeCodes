@@ -27,14 +27,14 @@ namespace Preps.Google
         {
             if (low < high)
             {
-                // Lomuto
-                int pivot = LomutoPartition(arr, low, high);
-                Sort(arr, low, pivot - 1);
-                Sort(arr, pivot + 1, high);
-                //// Hoare
-                //int pivot = HoarePartition(arr, low, high);
-                //Sort(arr, low, pivot);
+                //// Lomuto
+                //int pivot = LomutoPartition(arr, low, high);
+                //Sort(arr, low, pivot - 1);
                 //Sort(arr, pivot + 1, high);
+                // Hoare
+                int pivot = HoarePartition(arr, low, high);
+                Sort(arr, low, pivot);
+                Sort(arr, pivot + 1, high);
             }
         }
 

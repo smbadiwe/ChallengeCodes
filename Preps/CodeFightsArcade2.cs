@@ -10,7 +10,7 @@ namespace Preps
     public class CodeFightsArcade2
     {
         #region getShortestPalindrome - using the so-called KMP approach
-        public static string getShortestPalindrome(String word)
+        public static string getShortestPalindrome(string word)
         {
             return new string(getShortestPalindrome(word.ToCharArray()));
         }
@@ -21,14 +21,13 @@ namespace Preps
             int doublePlusSentinelLen = (len << 1) + 1; // same as len * 2 + 1
 
             char sentinel = (char)8;
-            char[] palindromicBase = new char[doublePlusSentinelLen];
 
             // Set palindromicBase = reversedWord + sentinel + word
             var koo = new List<char>(doublePlusSentinelLen);
             koo.AddRange(word.Reverse());
             koo.Add(sentinel);
             koo.AddRange(word);
-            palindromicBase = koo.ToArray();
+            char[] palindromicBase = koo.ToArray();
 
             // Compute preprocessed table
             int[] table = new int[doublePlusSentinelLen + 1];

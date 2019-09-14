@@ -16,6 +16,14 @@ namespace Preps
             return list;
         }
 
+        /// <summary>
+        /// Adds the paren.
+        /// </summary>
+        /// <param name="list">The list.</param>
+        /// <param name="leftRem">The left ( remaining.</param>
+        /// <param name="rightRem">The right ) remaining.</param>
+        /// <param name="str">The string.</param>
+        /// <param name="count">The count.</param>
         private void addParen(List<string> list, int leftRem, int rightRem, char[] str, int count)
         {
             if (leftRem < 0 || rightRem < leftRem) return;
@@ -26,7 +34,7 @@ namespace Preps
             }
             else
             {
-                // add left is there's still any
+                // add left if there's still any
                 if (leftRem > 0)
                 {
                     str[count] = '(';

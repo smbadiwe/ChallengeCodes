@@ -17,6 +17,7 @@ namespace Preps
         static BucketSort binsort = new BucketSort();
         static Misc misc = new Misc();
         static Semaphore threadPool = new Semaphore(3, 5);
+
         static void DoTask(int threadId)
         {
             threadPool.WaitOne();
@@ -28,12 +29,50 @@ namespace Preps
             threadPool.Release();
         }
 
+        static void PrintArray(int[][] arr)
+        {
+            foreach (var arr1 in arr)
+            {
+                for (int i = 0; i < arr1.Length; i++)
+                {
+                    Console.Write(arr1[i] + "\t");
+                }
+                Console.WriteLine();
+            }
+        }
+
         static void Main(string[] args)
         {
-            Console.WriteLine(FromCareerCup.IsOrdered(new[] { "cc", "cb", "bb", "ac" }, "abc".ToCharArray()));
-            Console.WriteLine(FromCareerCup.IsOrdered(new[] { "cc", "cb", "bb", "ac" }, "cba".ToCharArray()));
-            Console.WriteLine(FromCareerCup.IsOrdered(new[] { "cc", "cb", "bb", "ac" }, "bca".ToCharArray()));
-            Console.WriteLine(FromCareerCup.IsOrdered(new[] { "cc", "cb", "bb", "ac", "cat", "aab" }, "cba".ToCharArray()));
+            Console.WriteLine(HackerRank.IsBalanced("([{}])"));
+            //Console.WriteLine(Combinatrionics.RemoveDuplicateChars("geeksforgeeks"));
+            //Combinatrionics.PrintLockCombinations(new[] {
+            //    new[] {1, 2, 3 },
+            //    new[] {4,5 },
+            //    new[] {6,7,8},
+            //    });
+            //MSFTOnSite.MicrosoftPreps.MaxSubarraySum(new[] { -2, -3, 4, -1, -2, 1, 5, -3 });
+            //MSFTOnSite.MicrosoftPreps.MaxSubarraySum(new[] { -2, 1, -3, 4, -1, 2, 1, -5, 4 });
+            //MSFTOnSite.MicrosoftPreps.MaxSubarraySum(new[] { -2, -3, -4, -1, -2, -1, -5, -3 });
+            //MSFTOnSite.MicrosoftPreps.MaxSubarraySum(new[] { 2, 1, 3, 4, 1, 2, 1, 5, 4 });
+            //MSFTOnSite.MicrosoftPreps.MaxSubarraySum(new[] { -2, -3, 4, -1, -2, 1, 5, 300 });
+            //MSFTOnSite.MicrosoftPreps.MaxSubarraySum(new[] { -2, -3, -4, -1, -2, -1, -5, 350 });
+            //var indexes = MSFTOnSite.MicrosoftPreps.FindTwoElementsWithGivenSum_n(new[] { 7, 5, 9, 3, 1 }, 10);
+            //Console.WriteLine("Indexes {0} and {1}", indexes.Item1, indexes.Item2);
+            //Console.WriteLine(FromCareerCup.IsOrdered(new[] { "cc", "cb", "bb", "ac" }, "abc".ToCharArray()));
+            //Console.WriteLine(FromCareerCup.IsOrdered(new[] { "cc", "cb", "bb", "ac" }, "cba".ToCharArray()));
+            //Console.WriteLine(FromCareerCup.IsOrdered(new[] { "cc", "cb", "bb", "ac" }, "bca".ToCharArray()));
+            //Console.WriteLine(FromCareerCup.IsOrdered(new[] { "cc", "cb", "bb", "ac", "cat", "aab" }, "cba".ToCharArray()));
+            //int[][] mat = new[] {
+            //     new[]  {1, 1, 1, 1, 1},
+            //     new[]  {2, 2, 2, 2, 2},
+            //     new[]  {3, 3, 3, 3, 3},
+            //     new[]  {4, 4, 4, 4, 4},
+            //     new[]  {5, 5, 5, 5, 5},
+            //      };
+            //int k = 3;
+
+            //MSFTOnSite.GFG.printSumTricky(mat, k);
+
             //var mAvg = new FromCareerCup.MovingAvg(3);
             //foreach (var num in Enumerable.Range(1, 10))
             //{

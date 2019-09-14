@@ -157,7 +157,7 @@ namespace Preps
         // Use the solution c of P, as appropriate to the application.
         void SaveResult(Data P)
         {
-            P.Solutions.Add(P.Path.ToList());
+            P.Solutions.Add(P.Path);
             if (P.Solutions.Count >= P.Config.MaxSolutions)
             {
                 P.ExitBacktrack = true;

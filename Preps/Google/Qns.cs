@@ -80,10 +80,11 @@ namespace Preps.Google
 
         public void PrintCombinations_D(int[][] hints)
         {
-            /*new vector<int>{1, 2, 3},
-         new vector<int>{4, 5},
-         new vector<int>{6, 7, 8} };
-        */
+            /*
+             new vector<int>{1, 2, 3},
+             new vector<int>{4, 5},
+             new vector<int>{6, 7, 8} };
+            */
             var sb = new StringBuilder();
             // for each vector
             for (int i = 0; i < hints.Length - 1; i++)

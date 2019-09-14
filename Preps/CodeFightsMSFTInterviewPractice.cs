@@ -416,7 +416,7 @@ namespace Preps
         }
         private static string CoinChangeProblem(int[] coins, int sum, List<int> partials)
         {
-            var target = Sum(partials);
+            var target = partials.Sum();
             if (target == sum)
             {
                 var sb = new StringBuilder();
@@ -442,17 +442,7 @@ namespace Preps
             }
             return result;
         }
-
-        private static int Sum(List<int> arr)
-        {
-            int ans = 0;
-            for (int i = 0; i < arr.Count; i++)
-            {
-                ans += arr[i];
-            }
-            return ans;
-        }
-
+        
         /// <summary>
         /// Given a value N, if we want to make change for N cents, 
         /// and we have infinite supply of each of S = { S1, S2, .. , Sm} 

@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Preps {
+namespace Preps
+{
     /// <summary>
     /// Programming Basics
     /// </summary>
-    class CodeFightsSkillTest2 {
+    class CodeFightsSkillTest2
+    {
         //public static string solution(int A, int B, int C, int D)
         //{
         //    // write your code in C# 6.0 with .NET 4.5 (Mono)
@@ -78,46 +80,57 @@ namespace Preps {
         //    return time;
         //}
 
-        public static int CssStringToColor(string colorString) {
+        public static int CssStringToColor(string colorString)
+        {
             // good string must start with #
-            if (string.IsNullOrWhiteSpace(colorString) || colorString[0] != '#') {
+            if (string.IsNullOrWhiteSpace(colorString) || colorString[0] != '#')
+            {
                 throw new ArgumentException("Error! Invalid value.");
             }
 
             // without the #, good string must have length = 3 or 6
             int trueLength = colorString.Length - 1;
-            if ((trueLength == 3 || trueLength == 6) == false) {
+            if ((trueLength == 3 || trueLength == 6) == false)
+            {
                 throw new ArgumentException("Error! Invalid value.");
             }
 
             colorString = colorString.ToUpperInvariant();
-            for (int i = 1; i <= trueLength; i++) { //i=1 due to the #
+            for (int i = 1; i <= trueLength; i++)
+            { //i=1 due to the #
                 char ch = colorString[i];
                 // check for invalid characters. Hex should only have 0-9A-F
                 // 0 - 9 => 48 - 57 in ASCII
                 // A - F => 65 - 70 in ASCII
-                if (ch < 48 || ch > 70) {
+                if (ch < '0' || ch > 'F')
+                {
                     throw new ArgumentException("Error! One or more character is an invalid hex character");
                 }
-                if (ch > 57 && ch < 65) {
+                if (ch > '9' && ch < 'A')
+                {
                     throw new ArgumentException("Error! One or more character is an invalid hex character");
                 }
             }
 
             // if trueLength is 3, promote to 6
             string newString = "";
-            if (trueLength == 3) {
-                for (int i = 1; i <= trueLength; i++) {  // Remember the # in the string?
+            if (trueLength == 3)
+            {
+                for (int i = 1; i <= trueLength; i++)
+                {  // Remember the # in the string?
                     newString += colorString[i];
                     newString += colorString[i];
                 }
-            } else {
+            }
+            else
+            {
                 newString = colorString.Substring(1);
             }
 
             // Now, convert hex string to decimal
             string fullBinary = "";
-            for (int i = 0; i < newString.Length; i += 2) {
+            for (int i = 0; i < newString.Length; i += 2)
+            {
                 var oneColorHex = string.Join("", newString[i], newString[i + 1]);
                 var hexToDec = Convert.ToInt32(oneColorHex, 16);
                 var binaryVal = Convert.ToString(hexToDec, 2).PadLeft(8, '0');
@@ -135,44 +148,57 @@ namespace Preps {
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
-        public static string removeDuplicateAdjacent(string s) {
+        public static string removeDuplicateAdjacent(string s)
+        {
             var charArr = new char[s.Length + 1];
-            for (int i = 0; i < s.Length; i++) {
+            for (int i = 0; i < s.Length; i++)
+            {
                 charArr[i] = s[i];
             }
             return removeDuplicate(charArr, 0, 0);
         }
 
-        private static string removeDuplicate(char[] s, int i, int j) {
-            while (s[j] != '\0') {
-                if (s[j] == s[j + 1]) {
-                    while (s[j] == s[j + 1]) {
+        private static string removeDuplicate(char[] s, int i, int j)
+        {
+            while (s[j] != '\0')
+            {
+                if (s[j] == s[j + 1])
+                {
+                    while (s[j] == s[j + 1])
+                    {
                         j++;
                     }
                     j++;
-                } else {
+                }
+                else
+                {
                     s[i++] = s[j++];
                 }
             }
 
             s[i] = '\0';
-            if (duplicatesExist(s)) {
+            if (duplicatesExist(s))
+            {
                 return removeDuplicate(s, 0, 0);
             }
 
             var sb = new StringBuilder();
             int ind = 0;
-            while (s[ind] != '\0') {
+            while (s[ind] != '\0')
+            {
                 sb.Append(s[ind]);
                 ind++;
             }
             return sb.ToString();
         }
 
-        private static bool duplicatesExist(char[] s) {
+        private static bool duplicatesExist(char[] s)
+        {
             int j = 0;
-            while (s[j] != '\0') {
-                if (s[j] == s[j + 1]) {
+            while (s[j] != '\0')
+            {
+                if (s[j] == s[j + 1])
+                {
                     return true;
                 }
                 j++;
@@ -189,7 +215,8 @@ namespace Preps {
         /// </summary>
         /// <param name="matrix"></param>
         /// <returns></returns>
-        int[] matrixElementsInSpiralOrder(int[][] matrix) {
+        int[] matrixElementsInSpiralOrder(int[][] matrix)
+        {
             if (matrix.Length == 0) return new int[0];
 
             string currentDirection = "Right";
@@ -203,14 +230,17 @@ namespace Preps {
             int totalElements = matrix.Length * matrix[0].Length;
             int[] spiralArray = new int[totalElements];
 
-            while (counter < totalElements) {
+            while (counter < totalElements)
+            {
                 spiralArray[counter] = matrix[yIndex][xIndex];
 
-                switch (currentDirection) {
+                switch (currentDirection)
+                {
                     case "Right":
                         if (xIndex < rightLimit)
                             xIndex++;
-                        else {
+                        else
+                        {
                             currentDirection = "Down";
                             yIndex++;
                             upLimit++;
@@ -219,7 +249,8 @@ namespace Preps {
                     case "Left":
                         if (xIndex > leftLimit)
                             xIndex--;
-                        else {
+                        else
+                        {
                             currentDirection = "Up";
                             yIndex--;
                             downLimit--;
@@ -228,7 +259,8 @@ namespace Preps {
                     case "Up":
                         if (yIndex > upLimit)
                             yIndex--;
-                        else {
+                        else
+                        {
                             currentDirection = "Right";
                             xIndex++;
                             leftLimit++;
@@ -237,7 +269,8 @@ namespace Preps {
                     case "Down":
                         if (yIndex < downLimit)
                             yIndex++;
-                        else {
+                        else
+                        {
                             currentDirection = "Left";
                             xIndex--;
                             rightLimit--;
@@ -258,8 +291,10 @@ namespace Preps {
         /// </summary>
         /// <param name="matrix"></param>
         /// <returns></returns>
-        public static int[] matrixElementsInSpiralOrder2(int[][] matrix) {
-            if (matrix == null || matrix.Length == 0 || matrix[0].Length == 0) {
+        public static int[] matrixElementsInSpiralOrder2(int[][] matrix)
+        {
+            if (matrix == null || matrix.Length == 0 || matrix[0].Length == 0)
+            {
                 return new int[0];
             }
             int m = matrix.Length;
@@ -272,14 +307,17 @@ namespace Preps {
             int top = 0;
             int bottom = m - 1;
 
-            while (currResultIndex < m * n) {
-                for (int j = left; j <= right; j++) {
+            while (currResultIndex < m * n)
+            {
+                for (int j = left; j <= right; j++)
+                {
                     result[currResultIndex] = matrix[top][j];
                     currResultIndex++;
                 }
                 top++;
 
-                for (int i = top; i <= bottom; i++) {
+                for (int i = top; i <= bottom; i++)
+                {
                     result[currResultIndex] = matrix[i][right];
                     currResultIndex++;
                 }
@@ -288,7 +326,8 @@ namespace Preps {
                 //prevent duplicate row
                 if (bottom < top) break;
 
-                for (int j = right; j >= left; j--) {
+                for (int j = right; j >= left; j--)
+                {
                     result[currResultIndex] = matrix[bottom][j];
                     currResultIndex++;
                 }
@@ -297,7 +336,8 @@ namespace Preps {
                 // prevent duplicate column
                 if (right < left) break;
 
-                for (int i = bottom; i >= top; i--) {
+                for (int i = bottom; i >= top; i--)
+                {
                     result[currResultIndex] = matrix[i][left];
                     currResultIndex++;
                 }
@@ -313,7 +353,8 @@ namespace Preps {
         /// </summary>
         /// <param name="matrix"></param>
         /// <returns></returns>
-        public static int[] matrixElementsInSpiralOrder3(int[][] matrix) {
+        public static int[] matrixElementsInSpiralOrder3(int[][] matrix)
+        {
             if (matrix.Length == 0) return new int[0];
 
             // Set initial direction
@@ -326,15 +367,19 @@ namespace Preps {
             var result = new int[xLen * yLen];
             int sideCounter = xLen, currResultIndex = 0;
             // While both of the run lengths are non-zero
-            while (xLen > 0 && yLen > 0) {
-                if (sideCounter > 0) {
+            while (xLen > 0 && yLen > 0)
+            {
+                if (sideCounter > 0)
+                {
                     // traverse the side while counter is > 0
                     sideCounter--;
                     x += dx;
                     y += dy;
                     result[currResultIndex] = matrix[x][y];
                     currResultIndex++;
-                } else {
+                }
+                else
+                {
                     // switch direction when the counter is 0
                     // Switch the direction -> rotates the sequence (1,0) (0,1) (-1,0) (0,-1)
                     int tmp = dx;
@@ -359,10 +404,13 @@ namespace Preps {
         /// </summary>
         /// <param name="a"></param>
         /// <returns></returns>
-        int[][] rotateImage(int[][] a) {
+        public static int[][] rotateImage(int[][] a)
+        {
             int n = a.Length;
-            for (int i = 0; i < n / 2; i++) {
-                for (int j = i; j < n - i - 1; j++) {
+            for (int i = 0; i < n / 2; i++)
+            {
+                for (int j = i; j < n - i - 1; j++)
+                {
                     int temp = a[i][j];
                     a[i][j] = a[n - 1 - j][i];
                     a[n - 1 - j][i] = a[n - 1 - i][n - 1 - j];
@@ -373,6 +421,31 @@ namespace Preps {
             return a;
         }
 
+        /// <summary>
+        /// You are given an m x n 2D matrix that represents an image. 
+        /// Rotate the image by 90 degrees (clockwise).
+        /// </summary>
+        /// <param name="a"></param>
+        /// <returns></returns>
+        public static int[][] rotateImage2(int[][] a)
+        {
+            int rows = a.Length;
+            int cols = a[0].Length;
+            int[][] newArr = new int[cols][];
+            for (int i = 0; i < cols; i++)
+            {
+                newArr[i] = new int[rows];
+            }
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    newArr[j][rows - i - 1] = a[i][j];
+                }
+            }
+            return newArr;
+        }
+
 
         /// <summary>
         /// Given a column title as it would appear in an Excel spreadsheet,
@@ -381,17 +454,12 @@ namespace Preps {
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
-        int excelSheetColumnNumber(string s) {
+        int excelSheetColumnNumber(string s)
+        {
             int result = 0;
-            //int end = s.Length - 1;
-            //int start = 0;
-            //while (end >= 0)
-            //{
-            //    result = result + (int)Math.Pow(26, start) * (s[end] + 1 - 'A');
-            //    start++;
-            //    end--;
-            //}
-            foreach (char c in s) {
+
+            foreach (char c in s)
+            {
                 result = 26 * result + (c - 'A' + 1);
             }
 
@@ -406,11 +474,13 @@ namespace Preps {
         /// <param name="l"></param>
         /// <param name="r"></param>
         /// <returns></returns>
-        public static string[] innerRanges(int[] nums, int l, int r) {
+        public static string[] innerRanges(int[] nums, int l, int r)
+        {
             int len = nums.Length;
             var ranges = new List<string>();
             long prev = (long)l - 1;
-            for (int i = 0; i <= len; i++) {
+            for (int i = 0; i <= len; i++)
+            {
                 long curr = (i == len) ? (long)r + 1 : nums[i];
                 if (curr - prev >= 2) // another way of saying (curr - 1 >= prev + 1)
                 {
@@ -433,18 +503,22 @@ namespace Preps {
         /// </summary>
         /// <param name="arr"></param>
         /// <returns></returns>
-        public int equilibriumPoint(int[] arr) {
+        public int equilibriumPoint(int[] arr)
+        {
 
             if (arr.Length == 1) return 1;
 
             int sum = 0;
-            foreach (var item in arr) {
+            foreach (var item in arr)
+            {
                 sum += item;
             }
 
             int partialSum = 0;
-            for (int i = 0; i < arr.Length; i++) {
-                if (partialSum == (sum - partialSum - arr[i])) {
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (partialSum == (sum - partialSum - arr[i]))
+                {
                     return i + 1;
                 }
                 partialSum += arr[i];
@@ -452,27 +526,32 @@ namespace Preps {
             return -1;
         }
 
-        public int reverseint(int x) {
+        public int reverseint(int x)
+        {
 
             int result = 0;
             bool negative = false;
-            if (x < 0) {
+            if (x < 0)
+            {
                 negative = true;
                 x = -1 * x;
             }
-            while (x > 0) {
+            while (x > 0)
+            {
                 result = result * 10 + x % 10;
                 x /= 10;
             }
             return negative ? -1 * result : result;
         }
 
-        public int missingNumber(int[] arr) {
+        public int missingNumber(int[] arr)
+        {
 
             int len = arr.Length;
             int total = len * (len + 1) / 2;
             int sum = 0;
-            foreach (var item in arr) {
+            foreach (var item in arr)
+            {
                 sum += item;
             }
             return total - sum;

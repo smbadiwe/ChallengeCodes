@@ -77,8 +77,9 @@
     <Compile Include="InterestingFormula.cs" />
     <Compile Include="LinkedListImpl.cs" />
     <Compile Include="LinkedListQs.cs" />
-    <Compile Include="MicrosoftPreps.cs" />
+    <Compile Include="MSFTOnSite\MicrosoftPreps.cs" />
     <Compile Include="MinHeap.cs" />
+    <Compile Include="MSFTOnSite\GFG.cs" />
     <Compile Include="OOAD\ElevatorDesign\Elevator.cs" />
     <Compile Include="OutCo.cs" />
     <Compile Include="PlayPrograms.cs" />

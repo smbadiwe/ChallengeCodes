@@ -9,6 +9,174 @@ namespace Preps
 {
     public class Combinatrionics
     {
+        /// <summary>
+        /// Given a text txt[0..n-1] and a pattern pat[0..m-1], write a function 
+        /// search(char pat[], char txt[]) that prints all occurrences of pat[] in txt[]. 
+        /// You may assume that n > m.
+        /// </summary>
+        /// <param name="str">The string.</param>
+        /// <param name="pattern">The pattern.</param>
+        /// <returns></returns>
+        public static List<int> FindPatternsInString(string txt, string pat)
+        {
+            // The worst case complexity of Naive algorithm is O(m(n-m+1)). 
+            int M = pat.Length;
+            int N = txt.Length;
+            var indexes = new List<int>();
+            /* A loop to slide pat one by one */
+            for (int i = 0; i <= N - M; i++)
+            {
+                int j;
+
+                /* For current index i, check for pattern 
+                match */
+                for (j = 0; j < M; j++)
+                    if (txt[i + j] != pat[j])
+                        break;
+
+                // if pat[0...M-1] = txt[i, i+1, ...i+M-1]
+                if (j == M)
+                    indexes.Add(i);
+                    //Console.WriteLine("Pattern found at index " + i);
+            }
+
+            return indexes;
+        }
+
+        //Not working
+        public static List<int> FindPatternsInString_KMP(string text, string pattern)
+        {
+            var indexes = new List<int>();
+            // Time complexity of KMP algorithm is O(n) in worst case.
+            int j = 0, k = 0;
+            int[] table = new int[3];
+            int nP = 0; // num of positions
+            while (j < text.Length)
+            {
+                if (pattern[k] == text[j])
+                {
+                    j++;
+                    k++;
+                    if (k == pattern.Length)
+                    {
+                        indexes.Add(j - k);
+                        k = table[k];
+                    }
+                }
+                else
+                {
+                    k = table[k];
+                    if (k < 0)
+                    {
+                        j++;
+                        k++;
+                    }
+                }
+            }
+
+            return indexes;
+        }
+
+        public static string RemoveDuplicateChars(string str)
+        {
+            var chars = new bool[256];
+            var sb = new StringBuilder();
+            foreach (var ch in str)
+            {
+                if (chars[ch]) continue;
+
+                chars[ch] = true;
+                sb.Append(ch);
+            }
+            return sb.ToString();
+        }
+        
+        public static void PrintLockCombinations(int[][] hints)
+        {
+            /*
+             new vector<int>{1, 2, 3},
+             new vector<int>{4, 5},
+             new vector<int>{6, 7, 8};
+            */
+            int nDigits = hints.Length;
+
+            var result = new int[nDigits];
+            // do first one
+            for (int i = 0; i < nDigits; i++)
+            {
+                result[i] = hints[i][0];
+            }
+
+            var sb = new StringBuilder();
+            while (true)
+            {
+                sb.AppendFormat("{0}\n", string.Join("-", result));
+
+                for (int i = nDigits - 1; i >= -1; i--)
+                {
+                    if (i == -1)
+                    {
+                        Console.WriteLine(sb);
+                        return;
+                    }
+                    
+                    if ((i == 0 && result[i] == hints[i].Last())
+                        || result[i] == hints[i].Last())
+                    {
+                        // back to beginning
+                        result[i] = hints[i].First();
+                    }
+                    else
+                    {
+                        // set to the next one
+                        for (int j = 0; j < hints[i].Length; j++)
+                        {
+                            if (hints[i][j] == result[i])
+                            {
+                                result[i] = hints[i][j + 1];
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                    
+                }
+            }
+        }
+
+        public static void PrintTimesOfDay()
+        {
+            var sb = new StringBuilder();
+            //HH:mm:ss
+            var result = new int[3];
+            // The first one: 00:00:00
+            while (true)
+            {
+                sb.AppendFormat("{0:D2}:{1:D2}:{2:D2}\n", result[0], result[1], result[2]);
+                
+                for (int i = 2; i >= -1; i--)
+                {
+                    if (i == -1)
+                    {
+                        // return
+                        Console.WriteLine(sb);
+                        return;
+                    }
+                    // hr stops at 23; mm and ss resets at 59
+                    if ((i == 0 && result[i] == 23) || (result[i] == 59))
+                    {
+                        result[i] = 0;
+                    }
+                    else
+                    {
+                        result[i]++;
+                        break;
+                    }
+                }
+
+            }
+        }
+
         #region Phone Numbers to Words        
         /// <summary>
         /// Prints all the word equivalents of a given phone number.
@@ -16,14 +184,15 @@ namespace Preps
         /// <param name="sevenDigitNumber">The seven digit number.</param>
         public static void PrintWords(string sevenDigitNumber)
         {
-            char[] result = new char[sevenDigitNumber.Length];
+            //char[] result = new char[sevenDigitNumber.Length];
             //PrintWords_Recursion(sevenDigitNumber, 0, result);
-            PrintWords_Loop(sevenDigitNumber, result);
+            PrintWords_Loop(sevenDigitNumber);
         }
 
-        private static void PrintWords_Loop(string sevenDigitNumber, char[] result)
+        private static void PrintWords_Loop(string sevenDigitNumber)
         {
             var length = sevenDigitNumber.Length;
+            char[] result = new char[length];
             // start with the first phone word
             for (int i = 0; i < length; i++)
             {
@@ -130,6 +299,7 @@ namespace Preps
             return haves.Concat(haveNots);
         }
 
+        // O(n*2^n)
         public static List<List<T>> GetSubsets_BitArray<T>(List<T> source)
         {
             int nElements = source.Count;
@@ -330,7 +500,7 @@ namespace Preps
         /// <param name="str">The string.</param>
         /// <param name="left">The left.</param>
         /// <param name="right">The right.</param>
-        private static void Permutations(string str, int left, int right)
+        private static void Permutations(char[] str, int left, int right)
         {
             if (left == right)
             {
@@ -340,9 +510,9 @@ namespace Preps
             {
                 for (int i = left; i <= right; i++)
                 {
-                    str = Swap(str, left, i);
+                    Swap(str, left, i);
                     Permutations(str, left + 1, right);
-                    str = Swap(str, left, i);
+                    Swap(str, left, i);
                 }
             }
         }
@@ -352,13 +522,11 @@ namespace Preps
             return item.Substring(0, i) + ch + item.Substring(i);
         }
 
-        private static string Swap(string str, int left, int right)
+        private static void Swap(char[] arr, int left, int right)
         {
-            var arr = str.ToCharArray();
             var temp = arr[left];
             arr[left] = arr[right];
             arr[right] = temp;
-            return new string(arr);
         }
 
         #endregion
